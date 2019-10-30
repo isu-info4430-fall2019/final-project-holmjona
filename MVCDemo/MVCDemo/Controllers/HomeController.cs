@@ -13,11 +13,21 @@ namespace MVCDemo.Controllers {
 
         public HomeController(ILogger<HomeController> logger) {
             _logger = logger;
+            SuperHero sup = new SuperHero("TheBat");
+
         }
 
         public IActionResult Index() {
             return View();
         }
+
+        public IActionResult Jump() {
+            ViewData["Title"] = "Awesommes!!";
+            ViewBag.FuzzyAnimals = "are cute";
+            
+            return View("PinkPanther");
+        }
+
 
         public IActionResult Privacy() {
             return View();

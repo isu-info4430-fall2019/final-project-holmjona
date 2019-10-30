@@ -1,0 +1,16 @@
+﻿@model List<SuperHero>
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+<ul>
+    @foreach (SuperHero sup in Model) {
+        <li>@sup.FirstName @sup.LastName</li>
+    }
+</ul>
+<table>
+    @foreach (SuperHero sup in Model) {
+        <tr><td>@sup.FirstName</td><td>@sup.LastName</td></tr>
+    }
+    </table>

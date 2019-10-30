@@ -1,0 +1,177 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MVCDemo {
+    [Serializable]
+    public abstract class Person {
+        #region Private Variables
+        private String _FirstName = "";
+        private String _LastName = "";
+        private DateTime _BirthDate = DateTime.MaxValue;
+        protected Double _Height = 0.0;
+        private float _ShoeSize = 0.0F;
+        private Color _EyeColor = Color.Brown;
+        // 0 = brown, 1 = blue, 
+
+        public enum Color {
+            Brown,
+            Blue,
+            Green,
+            Hazel = 99,
+            Gray= 56,
+            Aqua
+        }
+
+        public enum Action {
+            Funky,
+           Fly,
+           Break
+        }
+
+
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Person() {
+            FirstName = LastName = "Unknown";
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="bDay"></param>
+        public Person(String fName, String lName, DateTime bDay, double ShoeSize) {
+            FirstName = fName;
+            LastName = lName;
+            BirthDate = bDay;
+        }
+
+        public Person(String fName, String lName, DateTime bDay) {
+            FirstName = fName;
+            LastName = lName;
+            BirthDate = bDay;
+        }
+        #endregion
+
+        #region Properties
+        public string FirstName {
+            get {
+                return _FirstName;
+            }
+            set {
+                if (value != null && value != "")
+                    _FirstName = value;
+                else
+                    _FirstName = "Unknown";
+
+            }
+        }
+        public string LastName {
+            get {
+                return _LastName;
+            }
+            set {
+                if (value != null && value != "")
+                    _LastName = value;
+                else
+                    _LastName = "Unknown";
+            }
+        }
+
+        public string FullName {
+            get {
+                return String.Format("{0} {1}",
+                    FirstName, LastName);
+            }
+        }
+
+
+        public DateTime BirthDate {
+            get {
+                return _BirthDate;
+            }
+            set {
+                if (value <= DateTime.Now)
+                    _BirthDate = value;
+            }
+        }
+
+
+
+        public float ShoeSize {
+            get {
+                return _ShoeSize;
+            }
+            set {
+                if (value > 0)
+                    _ShoeSize = value;
+            }
+        }
+
+        public Color EyeColor {
+            get {
+                return _EyeColor;
+            }
+            set {
+                _EyeColor = value;
+            }
+        }
+        public virtual double Height {
+            get {
+                return _Height;
+            }
+            set {
+                if (value > 0)
+                    _Height = value;
+            }
+        }
+
+     
+        #endregion
+
+        #region Private Methods
+        #endregion
+
+        #region Public Methods
+        public int Age() {
+            return DateTime.Now.Year - BirthDate.Year;
+        }
+        public string Info() {
+            return string.Format(
+                "{0} {1} {2}",
+               FullName, Age(), EyeColor);
+        }
+
+
+        public override string ToString() {
+            return FullName;
+        }
+
+        public void setEyeColor(Color clr ) {
+            EyeColor = clr;
+        }
+
+        public abstract void Dance(Action act);
+
+        public virtual void Fight(int i) {
+            // this is how a normal person fights.
+            // with pillows.
+        }
+
+        public virtual string Laugh() {
+            return "hehehe";
+        }
+
+
+
+        #endregion
+
+    }
+}
