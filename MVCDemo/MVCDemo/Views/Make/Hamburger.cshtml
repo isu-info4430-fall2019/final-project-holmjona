@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+    top or bottom?
+*@
+@{bool isOnTop = true; }
+
+@Html.Partial("Bun", isOnTop)
+@for (int i = 0; i < 2; i++) {
+    @Html.Partial("By")
+    isOnTop = false;
+}
+@Html.Partial("Bun", isOnTop)
+
+
+
+
+@*<div class="bun top"></div>
+    <div class="cheese"></div>
+    <div class="tomato"></div>
+    @Html.Partial("Bacon")
+    @Html.Partial("Bacon")
+    @Html.Partial("Bacon")
+    @Html.Partial("Bacon")
+    @Html.Partial("Bacon")
+    @Html.Partial("Bacon")
+    @Html.Partial("Lettuce")
+    <div class="hamburger"></div>
+    <div class="bun bottom"></div>*@

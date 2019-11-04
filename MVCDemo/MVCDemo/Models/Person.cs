@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVCDemo {
     [Serializable]
-    public abstract class Person {
+    public abstract class Person : DatabaseRecord {
         #region Private Variables
         private String _FirstName = "";
         private String _LastName = "";

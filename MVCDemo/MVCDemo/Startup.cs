@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using MVCDemo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVCDemo.Models;
 
 namespace MVCDemo {
     public class Startup {
@@ -31,6 +32,9 @@ namespace MVCDemo {
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc().AddRazorRuntimeCompilation();
+
+    services.AddDbContext<DELETEMEContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DELETEMEContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

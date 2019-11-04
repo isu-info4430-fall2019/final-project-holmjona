@@ -1,0 +1,80 @@
+﻿body {
+}
+
+.bun, .lettuce, .tomatoes,
+.onions, .cheese, .hamburger,
+.bacon, .chicken, .top, .bottom {
+    width: 500px;
+}
+
+.bun {
+    height: 50px;
+    background-color: #a25517;
+    border: 1px solid #755d1e;
+}
+
+    .bun.top {
+        border-radius: 100px 100px 0 0;
+        height: 80px;
+    }
+
+    .bun.bottom {
+        border-radius: 0 0 20px 20px;
+    }
+
+.lettuce {
+    height: 20px;
+    background-color: #0A0;
+    border: 1px solid #030;
+    margin: 0 -30px;
+    width: 560px;
+    border-radius: 10px 5px;
+}
+
+.tomato {
+    height: 25px;
+    background-color: #D00;
+    border: 1px solid #300;
+    margin: 0 30px;
+    width: 440px;
+    border-radius: 5px;
+}
+
+.onion {
+    height: 15px;
+    background-color: #e8dece;
+    border: 1px solid #908d88;
+    margin: 0 50px;
+    width: 400px;
+    border-radius: 5px;
+}
+
+.cheese {
+    height: 10px;
+    background-color: #ffa501;
+    border: 1px solid #895800;
+    border-radius: 2px;
+}
+
+.hamburger {
+    height: 60px;
+    background-color: #5e2b0d;
+    border: 1px solid #3d1903;
+    border-radius: 35px;
+}
+
+.bacon {
+    height: 7px;
+    background-color: #5e2b0d;
+    border: 1px solid #3d1903;
+    margin: 0 -30px;
+    width: 540px;
+    border-radius: 35px;
+}
+
+.chicken {
+    height: 40px;
+    background-color: #d0a346;
+    border: 1px solid #5b5644;
+    border-radius: 15px;
+}
