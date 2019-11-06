@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,6 +62,9 @@ namespace MVCDemo {
         #endregion
 
         #region Properties
+        [Display(Name = "First name")]
+        [StringLength(60)]
+        [Required(ErrorMessage = "Oops, you need a {0}")]
         public string FirstName {
             get {
                 return _FirstName;
@@ -73,6 +77,8 @@ namespace MVCDemo {
 
             }
         }
+        [Display(Name = "Last name")]
+        [StringLength(60)]
         public string LastName {
             get {
                 return _LastName;
@@ -92,7 +98,8 @@ namespace MVCDemo {
             }
         }
 
-
+        [Display(Name = "When you entered the world")]
+        [DataType(DataType.Date,ErrorMessage ="This date does not match")]
         public DateTime BirthDate {
             get {
                 return _BirthDate;
@@ -104,7 +111,7 @@ namespace MVCDemo {
         }
 
 
-
+        [Range(1,20)]
         public float ShoeSize {
             get {
                 return _ShoeSize;
@@ -123,6 +130,8 @@ namespace MVCDemo {
                 _EyeColor = value;
             }
         }
+
+
         public virtual double Height {
             get {
                 return _Height;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MVCDemo {
-   public class City {
+   public class City :DatabaseRecord {
         private Hideout<SuperHero, double>[,] _PossibleHideouts;
 
         public City() {

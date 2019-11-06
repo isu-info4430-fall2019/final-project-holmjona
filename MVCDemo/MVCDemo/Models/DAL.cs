@@ -19,13 +19,14 @@ namespace MVCDemo.Models {
 
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "SELECT * FROM SuperHeroes";
+                comm.CommandText = "sprocSuperHeroesGet";
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
 
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read()) {
                     SuperHero sup = new SuperHero();
-                    //sup.  = dr["SuperHeroID"];
+                    sup.ID  = (int)dr["SuperHeroID"];
                     sup.FirstName  = dr["FirstName"].ToString();
                     sup.LastName  = (string)dr["LastName"];
                     sup.BirthDate  = (DateTime)dr["DateOfBirth"];
@@ -43,6 +44,38 @@ namespace MVCDemo.Models {
                 if (conn != null) conn.Close();
             }
             return retList;
+        }
+
+        public static SuperHero SuperHeroesGet(int id) {
+            SuperHero retObject = null; 
+            SqlConnection conn = null;
+
+            try {
+                conn = new SqlConnection();
+                conn.ConnectionString = connectionString;
+
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                comm.CommandText = "sprocSuperHeroGet";
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@SuperHeroID", id);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+                while (dr.Read()) {
+                    retObject = new SuperHero();
+                    retObject.ID = (int)dr["SuperHeroID"];
+                    retObject.FirstName = dr["FirstName"].ToString();
+                    retObject.LastName = (string)dr["LastName"];
+                    retObject.BirthDate = (DateTime)dr["DateOfBirth"];
+                }
+
+            } catch (Exception ex) {
+                retObject = null;
+            } finally {
+                if (conn != null) conn.Close();
+            }
+            return retObject;
         }
 
     }

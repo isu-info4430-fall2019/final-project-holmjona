@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,7 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
             set { _AlterEgo = value; }
         }
         
+        [Display(Name ="How tall are you")]
         public override double Height {
             get {
                 return base.Height + 6;

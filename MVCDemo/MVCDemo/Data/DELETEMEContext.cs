@@ -15,5 +15,7 @@ namespace MVCDemo.Models
         }
 
         public DbSet<MVCDemo.Citizen> Citizen { get; set; }
+
+        public DbSet<MVCDemo.SuperHero> SuperHero { get; set; }
     }
 }

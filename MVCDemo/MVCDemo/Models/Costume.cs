@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVCDemo {
     [Serializable]
- public class Costume {
+ public class Costume :DatabaseRecord {
         private string _Color = "Blue";
         private bool _HasCape = false;
         private bool _HasMask = false;

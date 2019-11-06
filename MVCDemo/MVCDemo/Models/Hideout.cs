@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVCDemo {
     [Serializable]
-   public class Hideout<A,GGG> {
+   public class Hideout<A,GGG> : DatabaseRecord {
         private String _Name;
         private List<A> _Members;
         private GGG _Level;
