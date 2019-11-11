@@ -3,9 +3,20 @@
 @{
     ViewData["Title"] = "Details";
 }
+    @*@{List<int> ints = (List<int>)ViewData["numbers"];}*@
 
 <h1>Details</h1>
+<script>
+    @*@for (int i = 0; i < ints.Count; i++) {
 
+    }*@
+    var nums = [
+    @foreach (int integerNumebrThingy in ViewBag.numbers) {
+        @(integerNumebrThingy + ",")
+            }
+    ];
+    alert("magic goes here: " + nums );
+</script>
 <div>
     <h4>SuperHero</h4>
     <hr />

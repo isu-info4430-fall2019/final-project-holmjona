@@ -21,6 +21,18 @@ namespace MVCDemo.Controllers {
             return View();
         }
 
+        public ActionResult Cool(int? number) {
+            string num = Request.Query["number"];
+            return View("CoolName");
+        }
+
+        [HttpPost]
+        public ActionResult Cool() {
+            return View("CoolName");
+        }
+
+
+
         public IActionResult Jump() {
             ViewData["Title"] = "Awesommes!!";
             ViewBag.FuzzyAnimals = "are cute";
