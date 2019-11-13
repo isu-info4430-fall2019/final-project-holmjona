@@ -6,7 +6,7 @@ using Microsoft.Data.SqlClient;
 using System.Configuration;
 
 
-namespace MVCDemo.Models {
+namespace MVCDemo {
     public static class SuperDAL {
         private static string ReadOnlyConnectionString = "Server=localhost;Database=SuperHeroes;Trusted_Connection=True;";
         private static string EditOnlyConnectionString = "Server=localhost;Database=SuperHeroes;Trusted_Connection=True;";
@@ -14,65 +14,6 @@ namespace MVCDemo.Models {
             Read,
             Edit
         }
-        #region Database Object Strings
-        #region Citizen
-        internal const string db_Citizen_ID = "CitizenID";
-        internal const string db_Citizen_FirstName = "FirstName";
-        internal const string db_Citizen_LastName = "LastName";
-        internal const string db_Citizen_DateOfBirth = "DateOfBirth";
-        internal const string db_Citizen_EyeColor = "EyeColor";
-        internal const string db_Citizen_HeightInInches = "HeightInInches";
-        #endregion
-        #region City
-        internal const string db_City_ID= "CityID";
-        internal const string db_City_Name= "Name";
-        #endregion
-
-        #region Costume
-        internal const string db_Costume_ID= "CostumeID";
-        internal const string db_Costume_ColorMain= "ColorMain";
-        internal const string db_Costume_ColorSecondary= "ColorSecondary";
-        internal const string db_Costume_ColorTertiary= "ColorTertiary";
-        internal const string db_Costume_HasCape= "HasCape";
-        internal const string db_Costume_HasMask = "HasMask";
-        #endregion
-        #region Hideout
-        internal const string db_Hideout_ID = "HideoutID";
-        internal const string db_Hideout_Name = "Name";
-        internal const string db_Hideout_IsHeroBase = "IsHeroBase";
-        #endregion
-        #region PetType
-        internal const string db_PetType_ID = "PetTypeID";
-        internal const string db_PetType_Name = "Name";
-        #endregion
-        #region SuperHero
-        internal const string db_SuperHero_ID = "SuperHeroID";
-        internal const string db_SuperHero_FirstName = "FirstName";
-        internal const string db_SuperHero_LastName = "LastName";
-        internal const string db_SuperHero_DateOfBirth = "DateOfBirth";
-        internal const string db_SuperHero_EyeColor = "EyeColor";
-        internal const string db_SuperHero_HeightInInches = "HeightInInches";
-        internal const string db_SuperHero_AlterEgo = "AlterEgoID";
-        internal const string db_SuperHero_SideKick = "SideKickID";
-        internal const string db_SuperHero_Costume = "CostumeID";
-        #endregion
-        #region SuperPet
-        internal const string db_SuperPet_ID = "SuperPetID";
-        internal const string db_SuperPet_Name = "Name";
-        internal const string db_SuperPet_PetType = "PetTypeID";
-        internal const string db_SuperPet_SuperHero = "SuperHeroID";
-        #endregion
-        #region Villian
-        internal const string db_Villian_ID= "VillianID";
-        internal const string db_Villian_FirstName= "FirstName";
-        internal const string db_Villian_LastName= "LastName";
-        internal const string db_Villian_DateOfBirth= "DateOfBirth";
-        internal const string db_Villian_EyeColor= "EyeColor";
-        internal const string db_Villian_HeightInInches= "HeightInInches";
-        internal const string db_Villian_SideKick= "SideKickID";
-        internal const string db_Villian_Costume = "CostumeID";
-        #endregion
-        #endregion
         #region Database Connections
         internal static void ConnectToDatabase(SqlCommand comm, dbAction action = dbAction.Read) {
             try {
@@ -149,7 +90,7 @@ namespace MVCDemo.Models {
         #endregion
         #region Citizen
         /// <summary>
-        /// Gets the ChangeMeOut.Citizen correposponding with the given ID
+        /// Gets the MVCDemo.Citizen correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -169,7 +110,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.Citizencorresponding with the given ID
+        /// Gets the MVCDemo.Citizencorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -191,7 +132,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.Citizen objects from the database.
+        /// Gets a list of all MVCDemo.Citizen objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<Citizen> GetCitizens() {
@@ -224,9 +165,9 @@ namespace MVCDemo.Models {
             try {
                 comm.Parameters.AddWithValue("@" + Citizen.db_FirstName, obj.FirstName);
                 comm.Parameters.AddWithValue("@" + Citizen.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + Citizen.db_DateOfBirth, obj.DateOfBirth);
+                comm.Parameters.AddWithValue("@" + Citizen.db_DateOfBirth, obj.BirthDate);
                 comm.Parameters.AddWithValue("@" + Citizen.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + Citizen.db_HeightInInches, obj.HeightInInches);
+                comm.Parameters.AddWithValue("@" + Citizen.db_HeightInInches, obj.Height);
                 return AddObject(comm, "@" + Citizen.db_ID);
             } catch (Exception ex) {
             }
@@ -246,9 +187,9 @@ namespace MVCDemo.Models {
                 comm.Parameters.AddWithValue("@" + Citizen.db_ID, obj.ID);
                 comm.Parameters.AddWithValue("@" + Citizen.db_FirstName, obj.FirstName);
                 comm.Parameters.AddWithValue("@" + Citizen.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + Citizen.db_DateOfBirth, obj.DateOfBirth);
+                comm.Parameters.AddWithValue("@" + Citizen.db_DateOfBirth, obj.BirthDate);
                 comm.Parameters.AddWithValue("@" + Citizen.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + Citizen.db_HeightInInches, obj.HeightInInches);
+                comm.Parameters.AddWithValue("@" + Citizen.db_HeightInInches, obj.Height);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -278,7 +219,7 @@ namespace MVCDemo.Models {
 
         #region Costume
         /// <summary>
-        /// Gets the ChangeMeOut.Costume correposponding with the given ID
+        /// Gets the MVCDemo.Costume correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -298,7 +239,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.Costumecorresponding with the given ID
+        /// Gets the MVCDemo.Costumecorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -320,7 +261,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.Costume objects from the database.
+        /// Gets a list of all MVCDemo.Costume objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<Costume> GetCostumes() {
@@ -405,21 +346,21 @@ namespace MVCDemo.Models {
         #endregion
 
 
-        #region SuperHeroe
+        #region SuperHero
         /// <summary>
-        /// Gets the ChangeMeOut.SuperHeroe correposponding with the given ID
+        /// Gets the MVCDemo.SuperHero correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static SuperHeroe GetSuperHeroe(String idstring, Boolean retNewObject) {
-            SuperHeroe retObject = null;
+        public static SuperHero GetSuperHero(String idstring, Boolean retNewObject) {
+            SuperHero retObject = null;
             int ID;
             if (int.TryParse(idstring, out ID)) {
                 if (ID == -1 && retNewObject) {
-                    retObject = new SuperHeroe();
+                    retObject = new SuperHero();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
-                    retObject = GetSuperHeroe(ID);
+                    retObject = GetSuperHero(ID);
                 }
             }
             return retObject;
@@ -427,18 +368,18 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.SuperHeroecorresponding with the given ID
+        /// Gets the MVCDemo.SuperHerocorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static SuperHeroe GetSuperHeroe(int id) {
-            SqlCommand comm = new SqlCommand("sprocSuperHeroeGet");
-            SuperHeroe retObj = null;
+        public static SuperHero GetSuperHero(int id) {
+            SqlCommand comm = new SqlCommand("sprocSuperHeroGet");
+            SuperHero retObj = null;
             try {
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_ID, id);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_ID, id);
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retObj = new SuperHeroe(dr);
+                    retObj = new SuperHero(dr);
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -449,17 +390,17 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.SuperHeroe objects from the database.
+        /// Gets a list of all MVCDemo.SuperHero objects from the database.
         /// </summary>
         /// <remarks></remarks>
-        public static List<SuperHeroe> GetSuperHeroes() {
+        public static List<SuperHero> GetSuperHeroes() {
             SqlCommand comm = new SqlCommand("sprocSuperHeroesGetAll");
-            List<SuperHeroe> retList = new List<SuperHeroe>();
+            List<SuperHero> retList = new List<SuperHero>();
             try {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retList.Add(new SuperHeroe(dr));
+                    retList.Add(new SuperHero(dr));
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -472,23 +413,23 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Attempts to add a database entry corresponding to the given SuperHeroe
+        /// Attempts to add a database entry corresponding to the given SuperHero
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int AddSuperHeroe(SuperHeroe obj) {
+        internal static int AddSuperHero(SuperHero obj) {
             if (obj == null) return -1;
-            SqlCommand comm = new SqlCommand("sproc_SuperHeroeAdd");
+            SqlCommand comm = new SqlCommand("sproc_SuperHeroAdd");
             try {
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_FirstName, obj.FirstName);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_DateOfBirth, obj.DateOfBirth);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_HeightInInches, obj.HeightInInches);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_AlterEgo, obj.AlterEgo);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_SideKick, obj.SideKick);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_Costume, obj.CostumeID);
-                return AddObject(comm, "@" + SuperHeroe.db_ID);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_FirstName, obj.FirstName);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_LastName, obj.LastName);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_DateOfBirth, obj.BirthDate);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_EyeColor, obj.EyeColor);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_HeightInInches, obj.Height);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_AlterEgo, obj.AlterEgo);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_SideKick, obj.SideKick);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_Costume, obj.CostumeID);
+                return AddObject(comm, "@" + SuperHero.db_ID);
             } catch (Exception ex) {
             }
             return -1;
@@ -496,23 +437,23 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Attempts to the database entry corresponding to the given SuperHeroe
+        /// Attempts to the database entry corresponding to the given SuperHero
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int UpdateSuperHeroe(SuperHeroe obj) {
+        internal static int UpdateSuperHero(SuperHero obj) {
             if (obj == null) return -1;
-            SqlCommand comm = new SqlCommand("sproc_SuperHeroeUpdate");
+            SqlCommand comm = new SqlCommand("sproc_SuperHeroUpdate");
             try {
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_ID, obj.ID);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_FirstName, obj.FirstName);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_DateOfBirth, obj.DateOfBirth);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_HeightInInches, obj.HeightInInches);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_AlterEgo, obj.AlterEgo);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_SideKick, obj.SideKick);
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_Costume, obj.CostumeID);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_FirstName, obj.FirstName);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_LastName, obj.LastName);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_DateOfBirth, obj.BirthDate);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_EyeColor, obj.EyeColor);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_HeightInInches, obj.Height);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_AlterEgo, obj.AlterEgo);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_SideKick, obj.SideKick);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_Costume, obj.CostumeID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -521,15 +462,15 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Attempts to delete the database entry corresponding to the SuperHeroe
+        /// Attempts to delete the database entry corresponding to the SuperHero
         /// </summary>
         /// <remarks></remarks>
-        internal static int RemoveSuperHeroe(SuperHeroe obj) {
+        internal static int RemoveSuperHero(SuperHero obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand();
             try {
                 //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + SuperHeroe.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + SuperHero.db_ID, obj.ID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -542,7 +483,7 @@ namespace MVCDemo.Models {
 
         #region Villian
         /// <summary>
-        /// Gets the ChangeMeOut.Villian correposponding with the given ID
+        /// Gets the MVCDemo.Villian correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -562,7 +503,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.Villiancorresponding with the given ID
+        /// Gets the MVCDemo.Villiancorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -584,7 +525,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.Villian objects from the database.
+        /// Gets a list of all MVCDemo.Villian objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<Villian> GetVillians() {
@@ -617,9 +558,9 @@ namespace MVCDemo.Models {
             try {
                 comm.Parameters.AddWithValue("@" + Villian.db_FirstName, obj.FirstName);
                 comm.Parameters.AddWithValue("@" + Villian.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + Villian.db_DateOfBirth, obj.DateOfBirth);
+                comm.Parameters.AddWithValue("@" + Villian.db_DateOfBirth, obj.BirthDate);
                 comm.Parameters.AddWithValue("@" + Villian.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + Villian.db_HeightInInches, obj.HeightInInches);
+                comm.Parameters.AddWithValue("@" + Villian.db_HeightInInches, obj.Height);
                 comm.Parameters.AddWithValue("@" + Villian.db_SideKick, obj.SideKick);
                 comm.Parameters.AddWithValue("@" + Villian.db_Costume, obj.CostumeID);
                 return AddObject(comm, "@" + Villian.db_ID);
@@ -641,9 +582,9 @@ namespace MVCDemo.Models {
                 comm.Parameters.AddWithValue("@" + Villian.db_ID, obj.ID);
                 comm.Parameters.AddWithValue("@" + Villian.db_FirstName, obj.FirstName);
                 comm.Parameters.AddWithValue("@" + Villian.db_LastName, obj.LastName);
-                comm.Parameters.AddWithValue("@" + Villian.db_DateOfBirth, obj.DateOfBirth);
+                comm.Parameters.AddWithValue("@" + Villian.db_DateOfBirth, obj.BirthDate);
                 comm.Parameters.AddWithValue("@" + Villian.db_EyeColor, obj.EyeColor);
-                comm.Parameters.AddWithValue("@" + Villian.db_HeightInInches, obj.HeightInInches);
+                comm.Parameters.AddWithValue("@" + Villian.db_HeightInInches, obj.Height);
                 comm.Parameters.AddWithValue("@" + Villian.db_SideKick, obj.SideKick);
                 comm.Parameters.AddWithValue("@" + Villian.db_Costume, obj.CostumeID);
                 return UpdateObject(comm);
@@ -675,7 +616,7 @@ namespace MVCDemo.Models {
 
         #region City
         /// <summary>
-        /// Gets the ChangeMeOut.City correposponding with the given ID
+        /// Gets the MVCDemo.City correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -695,7 +636,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.Citycorresponding with the given ID
+        /// Gets the MVCDemo.Citycorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -717,7 +658,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.City objects from the database.
+        /// Gets a list of all MVCDemo.City objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<City> GetCities() {
@@ -796,16 +737,16 @@ namespace MVCDemo.Models {
 
         #region Hideout
         /// <summary>
-        /// Gets the ChangeMeOut.Hideout correposponding with the given ID
+        /// Gets the MVCDemo.Hideout correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static Hideout GetHideout(String idstring, Boolean retNewObject) {
-            Hideout retObject = null;
+        public static Hideout<SuperHero> GetHideout(String idstring, Boolean retNewObject) {
+            Hideout<SuperHero> retObject = null;
             int ID;
             if (int.TryParse(idstring, out ID)) {
                 if (ID == -1 && retNewObject) {
-                    retObject = new Hideout();
+                    retObject = new Hideout<SuperHero>();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
                     retObject = GetHideout(ID);
@@ -816,18 +757,18 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.Hideoutcorresponding with the given ID
+        /// Gets the MVCDemo.Hideoutcorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static Hideout GetHideout(int id) {
+        public static Hideout<object> GetHideout(int id) {
             SqlCommand comm = new SqlCommand("sprocHideoutGet");
-            Hideout retObj = null;
+            Hideout<object> retObj = null;
             try {
-                comm.Parameters.AddWithValue("@" + Hideout.db_ID, id);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_ID, id);
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retObj = new Hideout(dr);
+                    retObj = new Hideout<object>(dr);
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -838,17 +779,17 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.Hideout objects from the database.
+        /// Gets a list of all MVCDemo.Hideout objects from the database.
         /// </summary>
         /// <remarks></remarks>
-        public static List<Hideout> GetHideouts() {
+        public static List<Hideout<object>> GetHideouts() {
             SqlCommand comm = new SqlCommand("sprocHideoutsGetAll");
-            List<Hideout> retList = new List<Hideout>();
+            List<Hideout<object>> retList = new List<Hideout<object>>();
             try {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retList.Add(new Hideout(dr));
+                    retList.Add(new Hideout<object>(dr));
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -865,13 +806,13 @@ namespace MVCDemo.Models {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int AddHideout(Hideout obj) {
+        internal static int AddHideout(Hideout<object> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutAdd");
             try {
-                comm.Parameters.AddWithValue("@" + Hideout.db_Name, obj.Name);
-                comm.Parameters.AddWithValue("@" + Hideout.db_IsHeroBase, obj.IsHeroBase);
-                return AddObject(comm, "@" + Hideout.db_ID);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_Name, obj.Name);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_IsHeroBase, obj.IsHeroBase);
+                return AddObject(comm, "@" + Hideout<object>.db_ID);
             } catch (Exception ex) {
             }
             return -1;
@@ -883,13 +824,13 @@ namespace MVCDemo.Models {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int UpdateHideout(Hideout obj) {
+        internal static int UpdateHideout(Hideout<object> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutUpdate");
             try {
-                comm.Parameters.AddWithValue("@" + Hideout.db_ID, obj.ID);
-                comm.Parameters.AddWithValue("@" + Hideout.db_Name, obj.Name);
-                comm.Parameters.AddWithValue("@" + Hideout.db_IsHeroBase, obj.IsHeroBase);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_Name, obj.Name);
+                comm.Parameters.AddWithValue("@" + Hideout<object>.db_IsHeroBase, obj.IsHeroBase);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -901,12 +842,12 @@ namespace MVCDemo.Models {
         /// Attempts to delete the database entry corresponding to the Hideout
         /// </summary>
         /// <remarks></remarks>
-        internal static int RemoveHideout(Hideout obj) {
+        internal static int RemoveHideout(HideoutMember<SuperHero> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand();
             try {
                 //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + Hideout.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -917,139 +858,139 @@ namespace MVCDemo.Models {
         #endregion
 
 
-        #region Universe
-        /// <summary>
-        /// Gets the ChangeMeOut.Universe correposponding with the given ID
-        /// </summary>
-        /// <remarks></remarks>
+        /*   #region Universe
+           /// <summary>
+           /// Gets the MVCDemo.Universe correposponding with the given ID
+           /// </summary>
+           /// <remarks></remarks>
 
-        public static Universe GetUniverse(String idstring, Boolean retNewObject) {
-            Universe retObject = null;
-            int ID;
-            if (int.TryParse(idstring, out ID)) {
-                if (ID == -1 && retNewObject) {
-                    retObject = new Universe();
-                    retObject.ID = -1;
-                } else if (ID >= 0) {
-                    retObject = GetUniverse(ID);
-                }
-            }
-            return retObject;
-        }
-
-
-        /// <summary>
-        /// Gets the ChangeMeOut.Universecorresponding with the given ID
-        /// </summary>
-        /// <remarks></remarks>
-
-        public static Universe GetUniverse(int id) {
-            SqlCommand comm = new SqlCommand("sprocUniverseGet");
-            Universe retObj = null;
-            try {
-                comm.Parameters.AddWithValue("@" + Universe.db_ID, id);
-                SqlDataReader dr = GetDataReader(comm);
-                while (dr.Read()) {
-                    retObj = new Universe(dr);
-                }
-                comm.Connection.Close();
-            } catch (Exception ex) {
-                comm.Connection.Close();
-            }
-            return retObj;
-        }
+           public static Universe GetUniverse(String idstring, Boolean retNewObject) {
+               Universe retObject = null;
+               int ID;
+               if (int.TryParse(idstring, out ID)) {
+                   if (ID == -1 && retNewObject) {
+                       retObject = new Universe();
+                       retObject.ID = -1;
+                   } else if (ID >= 0) {
+                       retObject = GetUniverse(ID);
+                   }
+               }
+               return retObject;
+           }
 
 
-        /// <summary>
-        /// Gets a list of all ChangeMeOut.Universe objects from the database.
-        /// </summary>
-        /// <remarks></remarks>
-        public static List<Universe> GetUniverses() {
-            SqlCommand comm = new SqlCommand("sprocUniversesGetAll");
-            List<Universe> retList = new List<Universe>();
-            try {
-                comm.CommandType = System.Data.CommandType.StoredProcedure;
-                SqlDataReader dr = GetDataReader(comm);
-                while (dr.Read()) {
-                    retList.Add(new Universe(dr));
-                }
-                comm.Connection.Close();
-            } catch (Exception ex) {
-                comm.Connection.Close();
-            }
-            return retList;
-        }
+           /// <summary>
+           /// Gets the MVCDemo.Universecorresponding with the given ID
+           /// </summary>
+           /// <remarks></remarks>
+
+           public static Universe GetUniverse(int id) {
+               SqlCommand comm = new SqlCommand("sprocUniverseGet");
+               Universe retObj = null;
+               try {
+                   comm.Parameters.AddWithValue("@" + Universe.db_ID, id);
+                   SqlDataReader dr = GetDataReader(comm);
+                   while (dr.Read()) {
+                       retObj = new Universe(dr);
+                   }
+                   comm.Connection.Close();
+               } catch (Exception ex) {
+                   comm.Connection.Close();
+               }
+               return retObj;
+           }
+
+
+           /// <summary>
+           /// Gets a list of all MVCDemo.Universe objects from the database.
+           /// </summary>
+           /// <remarks></remarks>
+           public static List<Universe> GetUniverses() {
+               SqlCommand comm = new SqlCommand("sprocUniversesGetAll");
+               List<Universe> retList = new List<Universe>();
+               try {
+                   comm.CommandType = System.Data.CommandType.StoredProcedure;
+                   SqlDataReader dr = GetDataReader(comm);
+                   while (dr.Read()) {
+                       retList.Add(new Universe(dr));
+                   }
+                   comm.Connection.Close();
+               } catch (Exception ex) {
+                   comm.Connection.Close();
+               }
+               return retList;
+           }
 
 
 
 
-        /// <summary>
-        /// Attempts to add a database entry corresponding to the given Universe
-        /// </summary>
-        /// <remarks></remarks>
+           /// <summary>
+           /// Attempts to add a database entry corresponding to the given Universe
+           /// </summary>
+           /// <remarks></remarks>
 
-        internal static int AddUniverse(Universe obj) {
-            if (obj == null) return -1;
-            SqlCommand comm = new SqlCommand("sproc_UniverseAdd");
-            try {
-                comm.Parameters.AddWithValue("@" + Universe.db_Name, obj.Name);
-                return AddObject(comm, "@" + Universe.db_ID);
-            } catch (Exception ex) {
-            }
-            return -1;
-        }
-
-
-        /// <summary>
-        /// Attempts to the database entry corresponding to the given Universe
-        /// </summary>
-        /// <remarks></remarks>
-
-        internal static int UpdateUniverse(Universe obj) {
-            if (obj == null) return -1;
-            SqlCommand comm = new SqlCommand("sproc_UniverseUpdate");
-            try {
-                comm.Parameters.AddWithValue("@" + Universe.db_ID, obj.ID);
-                comm.Parameters.AddWithValue("@" + Universe.db_Name, obj.Name);
-                return UpdateObject(comm);
-            } catch (Exception ex) {
-            }
-            return -1;
-        }
+           internal static int AddUniverse(Universe obj) {
+               if (obj == null) return -1;
+               SqlCommand comm = new SqlCommand("sproc_UniverseAdd");
+               try {
+                   comm.Parameters.AddWithValue("@" + Universe.db_Name, obj.Name);
+                   return AddObject(comm, "@" + Universe.db_ID);
+               } catch (Exception ex) {
+               }
+               return -1;
+           }
 
 
-        /// <summary>
-        /// Attempts to delete the database entry corresponding to the Universe
-        /// </summary>
-        /// <remarks></remarks>
-        internal static int RemoveUniverse(Universe obj) {
-            if (obj == null) return -1;
-            SqlCommand comm = new SqlCommand();
-            try {
-                //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + Universe.db_ID, obj.ID);
-                return UpdateObject(comm);
-            } catch (Exception ex) {
-            }
-            return -1;
-        }
+           /// <summary>
+           /// Attempts to the database entry corresponding to the given Universe
+           /// </summary>
+           /// <remarks></remarks>
+
+           internal static int UpdateUniverse(Universe obj) {
+               if (obj == null) return -1;
+               SqlCommand comm = new SqlCommand("sproc_UniverseUpdate");
+               try {
+                   comm.Parameters.AddWithValue("@" + Universe.db_ID, obj.ID);
+                   comm.Parameters.AddWithValue("@" + Universe.db_Name, obj.Name);
+                   return UpdateObject(comm);
+               } catch (Exception ex) {
+               }
+               return -1;
+           }
 
 
-        #endregion
+           /// <summary>
+           /// Attempts to delete the database entry corresponding to the Universe
+           /// </summary>
+           /// <remarks></remarks>
+           internal static int RemoveUniverse(Universe obj) {
+               if (obj == null) return -1;
+               SqlCommand comm = new SqlCommand();
+               try {
+                   //comm.CommandText = //Insert Sproc Name Here;
+                   comm.Parameters.AddWithValue("@" + Universe.db_ID, obj.ID);
+                   return UpdateObject(comm);
+               } catch (Exception ex) {
+               }
+               return -1;
+           }
 
+
+           #endregion
+          */
 
         #region HideoutMember
         /// <summary>
-        /// Gets the ChangeMeOut.HideoutMember correposponding with the given ID
+        /// Gets the MVCDemo.HideoutMember correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static HideoutMember GetHideoutMember(String idstring, Boolean retNewObject) {
-            HideoutMember retObject = null;
+        public static HideoutMember<SuperHero> GetHideoutMember(String idstring, Boolean retNewObject) {
+            HideoutMember<SuperHero> retObject = null;
             int ID;
             if (int.TryParse(idstring, out ID)) {
                 if (ID == -1 && retNewObject) {
-                    retObject = new HideoutMember();
+                    retObject = new HideoutMember<SuperHero>();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
                     retObject = GetHideoutMember(ID);
@@ -1060,18 +1001,18 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.HideoutMembercorresponding with the given ID
+        /// Gets the MVCDemo.HideoutMembercorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
-        public static HideoutMember GetHideoutMember(int id) {
+        public static HideoutMember<SuperHero> GetHideoutMember(int id) {
             SqlCommand comm = new SqlCommand("sprocHideoutMemberGet");
-            HideoutMember retObj = null;
+            HideoutMember<SuperHero> retObj = null;
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_ID, id);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, id);
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retObj = new HideoutMember(dr);
+                    retObj = new HideoutMember<SuperHero>(dr);
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -1082,12 +1023,12 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.HideoutMember objects from the database.
+        /// Gets a list of all MVCDemo.HideoutMember objects from the database.
         /// </summary>
         /// <remarks></remarks>
-        public static List<HideoutMember> GetHideoutMembers() {
+        public static List<HideoutMember<SuperHero>> GetHideoutMembers() {
             SqlCommand comm = new SqlCommand("sprocHideoutMembersGetAll");
-            List<HideoutMember> retList = new List<HideoutMember>();
+            List<HideoutMember<SuperHero>> retList = new List<HideoutMember<SuperHero>>();
             try {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader dr = GetDataReader(comm);
@@ -1109,13 +1050,13 @@ namespace MVCDemo.Models {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int AddHideoutMember(HideoutMember obj) {
+        internal static int AddHideoutMember(HideoutMember<SuperHero> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutMemberAdd");
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_Hideout, obj.HideoutID);
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_Member, obj.Member);
-                return AddObject(comm, "@" + HideoutMember.db_ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Hideout, obj.HideoutID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Member, obj.Member);
+                return AddObject(comm, "@" + HideoutMember<SuperHero>.db_ID);
             } catch (Exception ex) {
             }
             return -1;
@@ -1127,13 +1068,13 @@ namespace MVCDemo.Models {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int UpdateHideoutMember(HideoutMember obj) {
+        internal static int UpdateHideoutMember(HideoutMember<SuperHero> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutMemberUpdate");
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_ID, obj.ID);
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_Hideout, obj.HideoutID);
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_Member, obj.Member);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Hideout, obj.HideoutID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Member, obj.Member);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -1145,12 +1086,12 @@ namespace MVCDemo.Models {
         /// Attempts to delete the database entry corresponding to the HideoutMember
         /// </summary>
         /// <remarks></remarks>
-        internal static int RemoveHideoutMember(HideoutMember obj) {
+        internal static int RemoveHideoutMember(HideoutMember<SuperHero> obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand();
             try {
                 //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + HideoutMember.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -1159,11 +1100,11 @@ namespace MVCDemo.Models {
 
 
         #endregion
-
+ 
 
         #region PetType
         /// <summary>
-        /// Gets the ChangeMeOut.PetType correposponding with the given ID
+        /// Gets the MVCDemo.PetType correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -1183,7 +1124,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.PetTypecorresponding with the given ID
+        /// Gets the MVCDemo.PetTypecorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -1205,7 +1146,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.PetType objects from the database.
+        /// Gets a list of all MVCDemo.PetType objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<PetType> GetPetTypes() {
@@ -1284,7 +1225,7 @@ namespace MVCDemo.Models {
 
         #region SuperPet
         /// <summary>
-        /// Gets the ChangeMeOut.SuperPet correposponding with the given ID
+        /// Gets the MVCDemo.SuperPet correposponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -1304,7 +1245,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets the ChangeMeOut.SuperPetcorresponding with the given ID
+        /// Gets the MVCDemo.SuperPetcorresponding with the given ID
         /// </summary>
         /// <remarks></remarks>
 
@@ -1326,7 +1267,7 @@ namespace MVCDemo.Models {
 
 
         /// <summary>
-        /// Gets a list of all ChangeMeOut.SuperPet objects from the database.
+        /// Gets a list of all MVCDemo.SuperPet objects from the database.
         /// </summary>
         /// <remarks></remarks>
         public static List<SuperPet> GetSuperPets() {
@@ -1403,105 +1344,6 @@ namespace MVCDemo.Models {
             return -1;
         }
 
-
-        #endregion
-
-        #region Fill Methods
-        /// <summary>
-        /// Fills Citizen from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(Citizen objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_Citizen_ID];
-            objToFill.FirstName = (string)dr[db_Citizen_FirstName];
-            objToFill.LastName = (string)dr[db_Citizen_LastName];
-            objToFill.BirthDate = (DateTime)dr[db_Citizen_DateOfBirth];
-            objToFill.EyeColor = (byte)dr[db_Citizen_EyeColor];
-            objToFill.Height = (double)dr[db_Citizen_HeightInInches];
-        }
-
-        /// <summary>
-        /// Fills City from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(City objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_City_ID];
-            objToFill.Name = (string)dr[db_City_Name];
-        }
-
-        /// <summary>
-        /// Fills Costume from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(Costume objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_Costume_ID];s
-            objToFill.ColorMain = (int)dr[db_Costume_ColorMain];
-            objToFill.ColorSecondary = (int)dr[db_Costume_ColorSecondary];
-            objToFill.ColorTertiary = (int)dr[db_Costume_ColorTertiary];
-            objToFill.HasCape = (bool)dr[db_Costume_HasCape];
-            objToFill.HasMask = (bool)dr[db_Costume_HasMask];
-        }
-
-        /// <summary>
-        /// Fills Costume from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(Hideout<object,object> objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_Hideout_ID];
-            objToFill.Name = (string)dr[db_Hideout_Name];
-            objToFill.IsHeroBase = (bool)dr[db_Hideout_IsHeroBase];
-        }
-
-        /// <summary>
-        /// Fills PetType from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(PetType objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_PetType_ID];
-            objToFill.Name = (string)dr[db_PetType_Name];
-        }
-
-        /// <summary>
-        /// Fills SuperHero from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(SuperHero objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_SuperHero_ID];
-            objToFill.FirstName = (string)dr[db_SuperHero_FirstName];
-            objToFill.LastName = (string)dr[db_SuperHero_LastName];
-            objToFill.DateOfBirth = (DateTime)dr[db_SuperHero_DateOfBirth];
-            objToFill.EyeColor = (byte)dr[db_SuperHero_EyeColor];
-            objToFill.HeightInInches = (double)dr[db_SuperHero_HeightInInches];
-            objToFill.AlterEgo = (int)dr[db_SuperHero_AlterEgo];
-            objToFill.SideKick = (int)dr[db_SuperHero_SideKick];
-            objToFill.CostumeID = (int)dr[Costume.db_SuperHero_ID];
-        }
-
-        /// <summary>
-        /// Fills SuperPet from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(SuperPet objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_SuperPet_ID];
-            objToFill.Name = (string)dr[db_SuperPet_Name];
-            objToFill.PetTypeID = (int)dr[PetType.db_SuperPet_ID];
-            objToFill.SuperHeroID = (int)dr[db_SuperPet_SuperHero];
-        }
-
-        /// <summary>
-        /// Fills Villian from a SqlClient Data Reader
-        /// </summary>
-        /// <remarks></remarks>
-        private static void Fill(Villian objToFill, SqlDataReader dr) {
-            objToFill.ID = (int)dr[db_Villian_ID];
-            objToFill.FirstName = (string)dr[db_Villian_FirstName];
-            objToFill.LastName = (string)dr[db_Villian_LastName];
-            objToFill.BirthDate = (DateTime)dr[db_Villian_DateOfBirth];
-            objToFill.EyeColor = (byte)dr[db_Villian_EyeColor];
-            objToFill.Height = (double)dr[db_Villian_HeightInInches];
-            objToFill.SideKick = (int)dr[db_Villian_SideKick];
-            objToFill.CostumeID = (int)dr[Costume.db_Villian_ID];
-        }
 
         #endregion
 

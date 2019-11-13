@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,89 +9,134 @@ using System.Threading.Tasks;
 namespace MVCDemo {
     [Serializable]
 public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
-        #region Class Level Variables
-        private Citizen _AlterEgo;
-        private bool _HasCar;
-        private Costume _Costume;
-        private SuperHero _SideKick;
-
-        #endregion
-
-        #region Contstructors
+        #region Constructors
         public SuperHero() {
-
         }
-        public SuperHero(string fName, Citizen alterEgo, DateTime bDay,bool hasCar)
-            : base(fName, "Good Guy", bDay) {
-            AlterEgo = alterEgo;
-            _HasCar = hasCar;
-        }
-
-        public SuperHero(string fName, string alterEgo, DateTime bDay, bool hasCar)
-            : base(fName, "Good Guy", bDay) {
-            AlterEgo = new Citizen();
-            AlterEgo.FirstName = alterEgo;
-             _HasCar = hasCar;
-        }
-
-
-        public SuperHero(string fName, string alterEgo, DateTime bDay)
-            :base(fName,"Good Guy",bDay) {
-            AlterEgo = new Citizen() { FirstName = alterEgo };
-
-        }
-        public SuperHero(string fName)
-    : base(fName, "Good Guy", new DateTime(1960,1,1)) {
-
+        internal SuperHero(Microsoft.Data.SqlClient.SqlDataReader dr) {
+            Fill(dr);
         }
 
         #endregion
 
-        #region Properities
-        public Citizen AlterEgo {
-            get { return _AlterEgo; }
-            set { _AlterEgo = value; }
-        }
+        #region Database String
+        internal const string db_ID = "SuperHeroID";
+        internal const string db_FirstName = "FirstName";
+        internal const string db_LastName = "LastName";
+        internal const string db_DateOfBirth = "DateOfBirth";
+        internal const string db_EyeColor = "EyeColor";
+        internal const string db_HeightInInches = "HeightInInches";
+        internal const string db_AlterEgo = "AlterEgoID";
+        internal const string db_SideKick = "SideKickID";
+        internal const string db_Costume = "CostumeID";
+
+        #endregion
+
+        #region Private Variables
+        private int _AlterEgoID;
+        private Citizen _AlterEgo;
+        private int _SideKickID;
+        private SuperHero _SideKick;
+        private int _CostumeID;
+        private Costume _Costume;
+
+        #endregion
+
+        #region Public Properties
         
-        [Display(Name ="How tall are you")]
-        public override double Height {
+        /// <summary>
+        /// Gets or sets the AlterEgo for this ChangeMeOut.SuperHeroe object.
+        /// </summary>
+        /// <remarks></remarks>
+        public Citizen AlterEgo {
             get {
-                return base.Height + 6;
+                return _AlterEgo;
             }
             set {
-                base.Height = value - 6;
-                _Height = value - 6;
+                _AlterEgo = value;
             }
         }
 
-        public Costume Costume {
-            get {
-                return _Costume;
-            }
-
-            set {
-                _Costume = value;
-            }
-        }
-
-        internal SuperHero SideKick {
+        /// <summary>
+        /// Gets or sets the SideKick for this ChangeMeOut.SuperHeroe object.
+        /// </summary>
+        /// <remarks></remarks>
+        public SuperHero SideKick {
             get {
                 return _SideKick;
             }
-
             set {
                 _SideKick = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the Costume for this ChangeMeOut.SuperHeroe object.
+        /// </summary>
+        /// <remarks></remarks>
+        
+        public Costume Costume {
+            get {
+                if (_Costume == null) {
+                    _Costume = SuperDAL.GetCostume(_CostumeID);
+                }
+                return _Costume;
+            }
+            set {
+                _Costume = value;
+                if (value == null) {
+                    _CostumeID = -1;
+                } else {
+                    _CostumeID = value.ID;
+                }
+            }
+        }
+        /// <summary>
+        /// Gets or sets the CostumeID for this ChangeMeOut.SuperHeroe object.
+        /// </summary>
+        /// <remarks></remarks>
+        public int CostumeID {
+            get {
+                return _CostumeID;
+            }
+            set {
+                _CostumeID = value;
+            }
+        }
+
+
         #endregion
 
+        #region Public Functions
+        /// <summary>
+        /// Calls DAL function to add SuperHeroe to the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public override int dbAdd() {
+            _ID = SuperDAL.AddSuperHero(this);
+            return ID;
+        }
 
-        #region Public Methods
+        /// <summary>
+        /// Calls DAL function to update SuperHeroe to the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public override int dbUpdate() {
+            return SuperDAL.UpdateSuperHero(this);
+        }
+
+        /// <summary>
+        /// Calls DAL function to remove SuperHeroe from the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public override int dbRemove() {
+            return SuperDAL.RemoveSuperHero(this);
+        }
+
         public override void Dance(Action act) {
             // thi is how a hero dances.
-            if(act == Action.Fly) {
+            if (act == Action.Fly) {
                 // Do fly stuff
-            }else if(act == Action.Break) {
+            } else if (act == Action.Break) {
                 // stand on my head
             }
         }
@@ -112,7 +158,7 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
         }
 
         public SuperHero callSideKick() {
-            return SideKick ;
+            return SideKick;
         }
 
         public string callForHelp(int loudy) {
@@ -136,8 +182,31 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
             return this.FirstName.CompareTo(theOtherGuy.FullName);
         }
 
+
         #endregion
 
+        #region Public Subs
+        /// <summary>
+        /// Fills object from a SqlClient Data Reader
+        /// </summary>
+        /// <remarks></remarks>
+        public override void Fill(Microsoft.Data.SqlClient.SqlDataReader dr) {
+            _ID = (int)dr[db_ID];
+            _FirstName = (string)dr[db_FirstName];
+            _LastName = (string)dr[db_LastName];
+            _BirthDate = (DateTime)dr[db_DateOfBirth];
+            _EyeColor = (Color)Enum.ToObject(typeof(Color), (byte)dr[db_EyeColor]);
+            _Height = (double)dr[db_HeightInInches];
+            _AlterEgoID = (int)dr[db_AlterEgo];
+            _SideKickID = (int)dr[db_SideKick];
+            _CostumeID = (int)dr[Costume.db_ID];
+        }
+
+
+
+        #endregion
+
+        
         #region operators
 
         public static String operator +(SuperHero s, Villian v){

@@ -9,12 +9,12 @@ namespace MVCDemo {
     [Serializable]
     public abstract class Person : DatabaseRecord {
         #region Private Variables
-        private String _FirstName = "";
-        private String _LastName = "";
-        private DateTime _BirthDate = DateTime.MaxValue;
+        protected String _FirstName = "";
+        protected String _LastName = "";
+        protected DateTime _BirthDate = DateTime.MaxValue;
         protected Double _Height = 0.0;
-        private float _ShoeSize = 0.0F;
-        private Color _EyeColor = Color.Brown;
+        protected float _ShoeSize = 0.0F;
+        protected Color _EyeColor = Color.Brown;
         // 0 = brown, 1 = blue, 
 
         public enum Color {
