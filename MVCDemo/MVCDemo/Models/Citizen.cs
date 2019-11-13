@@ -10,6 +10,10 @@ namespace MVCDemo {
         #region Constructors
         public Citizen() {
         }
+        public Citizen(string fName, string lastName)
+    : base(fName, lastName, new DateTime(1960, 1, 1)) {
+
+        }
         internal Citizen(Microsoft.Data.SqlClient.SqlDataReader dr) {
             Fill(dr);
         }
@@ -70,15 +74,15 @@ namespace MVCDemo {
             _ID = (int)dr[db_ID];
             _FirstName = (string)dr[db_FirstName];
             _LastName = (string)dr[db_LastName];
-            _DateOfBirth = (DateTime)dr[db_DateOfBirth];
-            _EyeColor = (byte)dr[db_EyeColor];
-            _HeightInInches = (double)dr[db_HeightInInches];
+            _BirthDate = (DateTime)dr[db_DateOfBirth];
+            _EyeColor = (Color)Enum.ToObject(typeof(Color), (byte)dr[db_EyeColor]);
+            _Height = (double)dr[db_HeightInInches];
         }
 
         #endregion
 
         public override string ToString() {
-            return this.GetType().ToString();
+            return "Citizen: " + FullName;
         }
 
         public override void Dance(Action act) {

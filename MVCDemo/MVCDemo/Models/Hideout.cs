@@ -8,6 +8,7 @@ namespace MVCDemo {
     [Serializable]
    public class Hideout<A> : DatabaseNamedRecord {
         private List<A> _Members;
+        private Type T = typeof(A);
         //private GGG _Level;
         private bool _IsHeroBase;
 
@@ -65,7 +66,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
         public override int dbAdd() {
-            _ID = SuperDAL.AddHideout(this);
+            _ID = SuperDAL.AddHideout( this);
             return ID;
         }
 
@@ -74,7 +75,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
         public override int dbUpdate() {
-            return SuperDAL.UpdateHideout(this);
+            return SuperDAL.UpdateHideout( this);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
         public int dbRemove() {
-            return SuperDAL.RemoveHideout(this);
+            return SuperDAL.RemoveHideout( this);
         }
 
         #endregion

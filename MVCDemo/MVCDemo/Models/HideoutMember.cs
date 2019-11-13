@@ -5,66 +5,58 @@ using System.Net;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-namespace MVCDemo
-{
-        /// <summary>
-        /// TODO: Comment this
-        /// </summary>
-        /// <remarks></remarks>
+namespace MVCDemo {
+    /// <summary>
+    /// TODO: Comment this
+    /// </summary>
+    /// <remarks></remarks>
 
-    public class HideoutMember<T> : DatabaseRecord
-{
-#region Constructors
-        public HideoutMember()
-        {
+    public class HideoutMember<M> : DatabaseRecord {
+        #region Private Variables
+        private int _HideoutID;
+        private Hideout<M> _Hideout;
+        private int _MemberID;
+        private M _Member;
+        private Type T = typeof(M);
+
+
+        #endregion
+        #region Constructors
+        public HideoutMember() {
         }
-        internal HideoutMember(Microsoft.Data.SqlClient.SqlDataReader dr)
-        {
+        internal HideoutMember(Microsoft.Data.SqlClient.SqlDataReader dr) {
             Fill(dr);
         }
 
-#endregion
+        #endregion
 
-#region Database String
-        internal const string db_ID= "HideoutMemberID";
-        internal const string db_Hideout= "HideoutID";
-        internal const string db_Member= "MemberID";
+        #region Database String
+        internal const string db_ID = "HideoutMemberID";
+        internal const string db_Hideout = "HideoutID";
+        internal const string db_Member = "MemberID";
 
-#endregion
+        #endregion
 
-#region Private Variables
-        private int _HideoutID;
-        private Hideout<T> _Hideout;
-        private int _MemberID;
-        private T _Member;
 
-#endregion
-
-#region Public Properties
+        #region Public Properties
         /// <summary>
         /// Gets or sets the Hideout for this ChangeMeOut.HideoutMember object.
         /// </summary>
         /// <remarks></remarks>
         [XmlIgnore]
-        public Hideout<T> Hideout {
-            get
-            {
-                if(_Hideout == null)
-                {
-                    _Hideout = SuperDAL.GetHideout(_HideoutID);
+        public Hideout<M> Hideout {
+            get {
+                if (_Hideout == null) {
+                    _Hideout = SuperDAL.GetHideout(T,_HideoutID);
                 }
                 return _Hideout;
             }
-                set
-                {
+            set {
                 _Hideout = value;
-                if (value == null)
-                {
-                    _HideoutID=-1;
-                }
-                else
-                {
-                    _HideoutID=value.ID;
+                if (value == null) {
+                    _HideoutID = -1;
+                } else {
+                    _HideoutID = value.ID;
                 }
             }
         }
@@ -72,14 +64,11 @@ namespace MVCDemo
         /// Gets or sets the HideoutID for this ChangeMeOut.HideoutMember object.
         /// </summary>
         /// <remarks></remarks>
-        public int HideoutID
-        {
-            get
-            {
+        public int HideoutID {
+            get {
                 return _HideoutID;
             }
-            set
-            {
+            set {
                 _HideoutID = value;
             }
         }
@@ -88,28 +77,24 @@ namespace MVCDemo
         /// Gets or sets the Member for this ChangeMeOut.HideoutMember object.
         /// </summary>
         /// <remarks></remarks>
-        public T Member
-        {
-            get
-            {
+        public M Member {
+            get {
                 return _Member;
             }
-            set
-            {
+            set {
                 _Member = value;
             }
         }
 
 
-#endregion
+        #endregion
 
-#region Public Functions
+        #region Public Functions
         /// <summary>
         /// Calls DAL function to add HideoutMember to the database.
         /// </summary>
         /// <remarks></remarks>
-        public override int dbAdd()
-        {
+        public override int dbAdd() {
             _ID = SuperDAL.AddHideoutMember(this);
             return ID;
         }
@@ -118,8 +103,7 @@ namespace MVCDemo
         /// Calls DAL function to update HideoutMember to the database.
         /// </summary>
         /// <remarks></remarks>
-        public override int dbUpdate()
-        {
+        public override int dbUpdate() {
             return SuperDAL.UpdateHideoutMember(this);
         }
 
@@ -127,29 +111,26 @@ namespace MVCDemo
         /// Calls DAL function to remove HideoutMember from the database.
         /// </summary>
         /// <remarks></remarks>
-        public int dbRemove()
-        {
+        public int dbRemove() {
             return SuperDAL.RemoveHideoutMember(this);
         }
 
-#endregion
+        #endregion
 
-#region Public Subs
+        #region Public Subs
         /// <summary>
         /// Fills object from a SqlClient Data Reader
         /// </summary>
         /// <remarks></remarks>
-        public override void Fill(Microsoft.Data.SqlClient.SqlDataReader dr)
-        {
+        public override void Fill(Microsoft.Data.SqlClient.SqlDataReader dr) {
             _ID = (int)dr[db_ID];
             _HideoutID = (int)dr[db_Hideout];
             _MemberID = (int)dr[db_Member];
         }
 
-#endregion
+        #endregion
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return this.GetType().ToString();
         }
 

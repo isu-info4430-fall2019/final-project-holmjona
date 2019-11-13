@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<form>
+    <label>UserName:</label>
+    <input id="txtUserName" name="UserName" />
+    <label>Password:</label>
+    <input type="password" id="txtPassword" name="Password" />
+    <button id="btnLogin">Log in</button>
+</form>
+<div id="divOut">You typed: <span id="spnOut"></span></div>
+<script>
+    document.getElementById("txtPassword").onkeyup = function (e) {
+        document.getElementById("spnOut").innerText += e.key;
+    };
+</script>
+

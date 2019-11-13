@@ -9,6 +9,15 @@ namespace MVCDemo {
         #region Constructors
         public Villian() {
         }
+        public Villian(string fName, DateTime bDay)
+     : base(fName, "Bad Guy", bDay) {
+            //FirstName = fName;
+            //BirthDate = bDay;
+        }
+        public Villian(string fName)
+    : base(fName, "Bad Guy", new DateTime(1960, 1, 1)) {
+
+        }
         internal Villian(Microsoft.Data.SqlClient.SqlDataReader dr) {
             Fill(dr);
         }

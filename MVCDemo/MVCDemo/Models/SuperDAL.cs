@@ -15,6 +15,11 @@ namespace MVCDemo {
             Edit
         }
         #region Database Connections
+        /// <summary>
+        /// Connects to the database based on the connection string needed
+        /// </summary>
+        /// <param name="comm">Command we are connecting to the database</param>
+        /// <param name="action">The action type that will affect the connections string.</param>
         internal static void ConnectToDatabase(SqlCommand comm, dbAction action = dbAction.Read) {
             try {
                 if (action == dbAction.Edit)
@@ -25,6 +30,11 @@ namespace MVCDemo {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
             } catch (Exception ex) { }
         }
+        /// <summary>
+        /// Sets Connection and Executes a command to read data from the database
+        /// </summary>
+        /// <param name="comm">Command we will run.</param>
+        /// <returns>Table result of the returning data requested.</returns>
         public static SqlDataReader GetDataReader(SqlCommand comm) {
             try {
                 ConnectToDatabase(comm);
@@ -37,7 +47,12 @@ namespace MVCDemo {
             }
         }
 
-
+        /// <summary>
+        /// Sets Connection and Executes a command to add a new object/ entity to the database.
+        /// </summary>
+        /// <param name="comm">Command that will be run</param>
+        /// <param name="parameterName">parameter name that will contain the returning Identity value.</param>
+        /// <returns>The new Identity created by the database for this object after adding it.</returns>
         internal static int AddObject(SqlCommand comm, string parameterName) {
             int retInt = 0;
             try {
@@ -741,7 +756,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        public static Hideout<SuperHero> GetHideout(String idstring, Boolean retNewObject) {
+        public static dynamic GetHideout(Type T, String idstring, Boolean retNewObject) {
             Hideout<SuperHero> retObject = null;
             int ID;
             if (int.TryParse(idstring, out ID)) {
@@ -749,7 +764,7 @@ namespace MVCDemo {
                     retObject = new Hideout<SuperHero>();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
-                    retObject = GetHideout(ID);
+                    retObject = GetHideout(T, ID);
                 }
             }
             return retObject;
@@ -761,14 +776,19 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        public static Hideout<object> GetHideout(int id) {
+        public static dynamic GetHideout(Type T, int id) {
             SqlCommand comm = new SqlCommand("sprocHideoutGet");
-            Hideout<object> retObj = null;
+            dynamic retObj = null;
             try {
                 comm.Parameters.AddWithValue("@" + Hideout<object>.db_ID, id);
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retObj = new Hideout<object>(dr);
+                    if (T == typeof(SuperHero))
+                        retObj = new Hideout<SuperHero>(dr);
+                    else if (T == typeof(Villian))
+                        retObj = new Hideout<Villian>(dr);
+                    else
+                        retObj = new Hideout<object>(dr);
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -782,14 +802,19 @@ namespace MVCDemo {
         /// Gets a list of all MVCDemo.Hideout objects from the database.
         /// </summary>
         /// <remarks></remarks>
-        public static List<Hideout<object>> GetHideouts() {
+        public static List<dynamic> GetHideouts(Type T) {
             SqlCommand comm = new SqlCommand("sprocHideoutsGetAll");
-            List<Hideout<object>> retList = new List<Hideout<object>>();
+            List<dynamic> retList = new List<dynamic>();
             try {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retList.Add(new Hideout<object>(dr));
+                    if (T == typeof(SuperHero))
+                        retList.Add(new Hideout<SuperHero>(dr));
+                    else if (T == typeof(Villian))
+                        retList.Add(new Hideout<Villian>(dr));
+                    else
+                        retList.Add(new Hideout<object>(dr));
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -806,7 +831,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int AddHideout(Hideout<object> obj) {
+        internal static int AddHideout(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutAdd");
             try {
@@ -824,7 +849,7 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int UpdateHideout(Hideout<object> obj) {
+        internal static int UpdateHideout(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutUpdate");
             try {
@@ -842,12 +867,12 @@ namespace MVCDemo {
         /// Attempts to delete the database entry corresponding to the Hideout
         /// </summary>
         /// <remarks></remarks>
-        internal static int RemoveHideout(HideoutMember<SuperHero> obj) {
+        internal static int RemoveHideout(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand();
             try {
                 //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_ID, obj.ID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -985,15 +1010,20 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        public static HideoutMember<SuperHero> GetHideoutMember(String idstring, Boolean retNewObject) {
-            HideoutMember<SuperHero> retObject = null;
+        public static dynamic GetHideoutMember(Type T, String idstring, Boolean retNewObject) {
+            dynamic retObject = null;
             int ID;
             if (int.TryParse(idstring, out ID)) {
                 if (ID == -1 && retNewObject) {
-                    retObject = new HideoutMember<SuperHero>();
+                    if (T == typeof(SuperHero))
+                        retObject = new HideoutMember<SuperHero>();
+                    else if (T == typeof(Villian))
+                        retObject = new HideoutMember<Villian>();
+                    else
+                        retObject = new HideoutMember<object>();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
-                    retObject = GetHideoutMember(ID);
+                    retObject = GetHideoutMember(T,ID);
                 }
             }
             return retObject;
@@ -1005,14 +1035,19 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        public static HideoutMember<SuperHero> GetHideoutMember(int id) {
+        public static dynamic GetHideoutMember(Type T, int id) {
             SqlCommand comm = new SqlCommand("sprocHideoutMemberGet");
-            HideoutMember<SuperHero> retObj = null;
+            dynamic retObj = null;
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, id);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_ID, id);
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retObj = new HideoutMember<SuperHero>(dr);
+                    if (T == typeof(SuperHero))
+                        retObj = new HideoutMember<SuperHero>(dr);
+                    else if (T == typeof(Villian))
+                        retObj = new HideoutMember<Villian>(dr);
+                    else
+                        retObj = new HideoutMember<object>(dr);
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -1026,14 +1061,19 @@ namespace MVCDemo {
         /// Gets a list of all MVCDemo.HideoutMember objects from the database.
         /// </summary>
         /// <remarks></remarks>
-        public static List<HideoutMember<SuperHero>> GetHideoutMembers() {
+        public static List<dynamic> GetHideoutMembers(Type T) {
             SqlCommand comm = new SqlCommand("sprocHideoutMembersGetAll");
-            List<HideoutMember<SuperHero>> retList = new List<HideoutMember<SuperHero>>();
+            List<dynamic> retList = new List<dynamic>();
             try {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader dr = GetDataReader(comm);
                 while (dr.Read()) {
-                    retList.Add(new HideoutMember(dr));
+                    if (T == typeof(SuperHero))
+                        retList.Add(new HideoutMember<SuperHero>(dr));
+                    else if (T == typeof(Villian))
+                        retList.Add(new HideoutMember<Villian>(dr));
+                    else
+                        retList.Add(new HideoutMember<object>(dr));
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
@@ -1050,12 +1090,12 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int AddHideoutMember(HideoutMember<SuperHero> obj) {
+        internal static int AddHideoutMember(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutMemberAdd");
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Hideout, obj.HideoutID);
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Member, obj.Member);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Hideout, obj.HideoutID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Member, obj.Member);
                 return AddObject(comm, "@" + HideoutMember<SuperHero>.db_ID);
             } catch (Exception ex) {
             }
@@ -1068,13 +1108,13 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
 
-        internal static int UpdateHideoutMember(HideoutMember<SuperHero> obj) {
+        internal static int UpdateHideoutMember(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand("sproc_HideoutMemberUpdate");
             try {
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Hideout, obj.HideoutID);
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_Member, obj.Member);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Hideout, obj.HideoutID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Member, obj.Member);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }
@@ -1086,12 +1126,12 @@ namespace MVCDemo {
         /// Attempts to delete the database entry corresponding to the HideoutMember
         /// </summary>
         /// <remarks></remarks>
-        internal static int RemoveHideoutMember(HideoutMember<SuperHero> obj) {
+        internal static int RemoveHideoutMember(dynamic obj) {
             if (obj == null) return -1;
             SqlCommand comm = new SqlCommand();
             try {
                 //comm.CommandText = //Insert Sproc Name Here;
-                comm.Parameters.AddWithValue("@" + HideoutMember<SuperHero>.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_ID, obj.ID);
                 return UpdateObject(comm);
             } catch (Exception ex) {
             }

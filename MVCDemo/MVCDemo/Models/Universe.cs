@@ -16,7 +16,7 @@ namespace MVCDemo {
         private static SuperHero _CurrentSuperHero;
         private static Villian _CurrentVillian;
 
-        private static Hideout<SuperHero, int> _HallOfJustice;
+        private static Hideout<SuperHero> _HallOfJustice;
 
         public enum Awesomeness {
             Very,
@@ -96,7 +96,7 @@ namespace MVCDemo {
             }
         }
 
-        public static Hideout<SuperHero, int> HallOfJustice {
+        public static Hideout<SuperHero> HallOfJustice {
             get {
                 if(_HallOfJustice == null) {
                     populateUniverse();
@@ -147,11 +147,11 @@ namespace MVCDemo {
             _innocs.Add(new Citizen("Lois", "Lane"));
 
 
-            _outfits.Add(new Costume() { Color = "Blue" });
-            _outfits.Add(new Costume() { Color = "Black", HasCape = true, HasMask = true });
-            _outfits.Add(new Costume() { Color = "Green", HasMask = true });
-            _outfits.Add(new Costume() { Color = "Purple" });
-            _outfits.Add(new Costume() { Color = "Red", HasMask = true });
+            _outfits.Add(new Costume() { ColorMain = (int)System.Drawing.KnownColor.Blue });
+            _outfits.Add(new Costume() { ColorMain = (int)System.Drawing.KnownColor.Black, HasCape = true, HasMask = true });
+            _outfits.Add(new Costume() { ColorMain = (int)System.Drawing.KnownColor.Green, HasMask = true });
+            _outfits.Add(new Costume() { ColorMain = (int)System.Drawing.KnownColor.Purple });
+            _outfits.Add(new Costume() { ColorMain = (int)System.Drawing.KnownColor.Red, HasMask = true });
 
             _supers[0].AlterEgo = _innocs[0];
             _supers[1].AlterEgo = _innocs[1];
@@ -165,7 +165,7 @@ namespace MVCDemo {
             _People.AddRange(_vills);
             _People.AddRange(_innocs);
 
-            _HallOfJustice = new Hideout<SuperHero, int>();
+            _HallOfJustice = new Hideout<SuperHero>();
             _HallOfJustice.Members.AddRange(_supers.Skip(2).Take(3));
 
         }

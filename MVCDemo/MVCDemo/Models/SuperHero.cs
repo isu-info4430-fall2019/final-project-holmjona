@@ -12,6 +12,20 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
         #region Constructors
         public SuperHero() {
         }
+        public SuperHero(string fName, Citizen alterEgo, DateTime bDay)
+    : base(fName, "Good Guy", bDay) {
+            AlterEgo = alterEgo;
+        }
+
+        public SuperHero(string fName, string alterEgo, DateTime bDay)
+            : base(fName, "Good Guy", bDay) {
+            AlterEgo = new Citizen() { FirstName = alterEgo };
+
+        }
+        public SuperHero(string fName)
+    : base(fName, "Good Guy", new DateTime(1960, 1, 1)) {
+
+        }
         internal SuperHero(Microsoft.Data.SqlClient.SqlDataReader dr) {
             Fill(dr);
         }
