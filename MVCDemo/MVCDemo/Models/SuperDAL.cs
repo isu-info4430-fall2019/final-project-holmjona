@@ -1326,6 +1326,27 @@ namespace MVCDemo {
             return retList;
         }
 
+        /// <summary>
+        /// Gets a list of all MVCDemo.SuperPet objects from the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public static List<SuperPet> GetSuperPets(SuperHero sup) {
+            SqlCommand comm = new SqlCommand("sprocSuperPetsGetForSuperHero");
+            List<SuperPet> retList = new List<SuperPet>();
+            try {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@" + SuperHero.db_ID, sup.ID);
+                SqlDataReader dr = GetDataReader(comm);
+                while (dr.Read()) {
+                    retList.Add(new SuperPet(dr));
+                }
+                comm.Connection.Close();
+            } catch (Exception ex) {
+                comm.Connection.Close();
+            }
+            return retList;
+        }
+
 
 
 

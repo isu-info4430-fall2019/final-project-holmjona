@@ -1,0 +1,41 @@
+﻿@model MVCDemo.SuperPet
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SuperPet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetTypeID" class="control-label"></label>
+                <select asp-for="PetTypeID" class="form-control" asp-items="ViewBag.PetTypeID"></select>
+                <span asp-validation-for="PetTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuperHeroID" class="control-label"></label>
+                <select asp-for="SuperHeroID" class="form-control" asp-items="ViewBag.SuperHeroID"></select>
+                <span asp-validation-for="SuperHeroID" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

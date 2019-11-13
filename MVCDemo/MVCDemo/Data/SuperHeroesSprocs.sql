@@ -1029,7 +1029,23 @@ BEGIN
      SELECT * FROM SuperPets
 END
 GO
+-- =============================================
+-- Author:		COB\holmjona
+-- Create date:	12 Nov 2019
+-- Description:	Retrieve all SuperPets from the database.
+-- =============================================
+CREATE PROCEDURE dbo.sprocSuperPetsGetForSuperHero
+@SuperHeroID int
+AS
+BEGIN
+     -- SET NOCOUNT ON added to prevent extra result sets from
+     -- interfering with SELECT statements.
+     SET NOCOUNT ON;
 
+     SELECT * FROM SuperPets
+		WHERE SuperHeroID = @SuperHeroID
+END
+GO
 --GRANT EXECUTE ON dbo.sprocSuperPetsGetAll TO sprocReadUser
 GO
 -- =============================================

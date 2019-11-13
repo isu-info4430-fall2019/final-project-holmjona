@@ -19,6 +19,9 @@ namespace MVCDemo.Controllers {
         // GET: SuperHero
         public async Task<IActionResult> Index() {
             List<SuperHero> sups = DAL.SuperHeroesGet();
+            foreach (SuperHero sup in sups) {
+                List<SuperPet> pets = sup.SuperPets;
+            }
             return View(sups);
         }
 

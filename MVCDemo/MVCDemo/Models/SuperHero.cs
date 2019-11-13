@@ -49,9 +49,11 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
         private int _AlterEgoID;
         private Citizen _AlterEgo;
         private int _SideKickID;
-        private SuperHero _SideKick;
+        private SuperHero _SideKick = null;
         private int _CostumeID;
         private Costume _Costume;
+
+        private List<SuperPet> _SuperPets = null;
 
         #endregion
 
@@ -114,6 +116,15 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
             }
             set {
                 _CostumeID = value;
+            }
+        }
+
+        public List<SuperPet> SuperPets {
+            get {
+                if(_SuperPets == null) {
+                    _SuperPets = SuperDAL.GetSuperPets(this);
+                }
+                return _SuperPets;
             }
         }
 
@@ -210,7 +221,7 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
             _LastName = (string)dr[db_LastName];
             _BirthDate = (DateTime)dr[db_DateOfBirth];
             _EyeColor = (Color)Enum.ToObject(typeof(Color), (byte)dr[db_EyeColor]);
-            _Height = (double)dr[db_HeightInInches];
+            _Height = (decimal)dr[db_HeightInInches];
             _AlterEgoID = (int)dr[db_AlterEgo];
             _SideKickID = (int)dr[db_SideKick];
             _CostumeID = (int)dr[Costume.db_ID];

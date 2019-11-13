@@ -76,7 +76,7 @@ namespace MVCDemo {
             _LastName = (string)dr[db_LastName];
             _BirthDate = (DateTime)dr[db_DateOfBirth];
             _EyeColor = (Color)Enum.ToObject(typeof(Color), (byte)dr[db_EyeColor]);
-            _Height = (double)dr[db_HeightInInches];
+            _Height = (decimal)dr[db_HeightInInches];
         }
 
         #endregion
