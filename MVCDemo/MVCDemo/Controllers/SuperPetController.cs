@@ -8,40 +8,41 @@ using Microsoft.EntityFrameworkCore;
 using MVCDemo;
 using MVCDemo.Models;
 
-namespace MVCDemo.Controllers
-{
-    public class SuperPetController : Controller
-    {
-       
+namespace MVCDemo.Controllers {
+    public class SuperPetController : Controller {
 
-        public SuperPetController(DELETEMEContext context)
-        {
-            
+
+        public SuperPetController(DELETEMEContext context) {
+
         }
 
         // GET: SuperPet
-        public ActionResult Index()
-        {
+        public ActionResult Index(int? page, int? count) {
             //    ViewBag.PetTypes = SuperDAL.GetPetTypes();
             List<SuperPet> lst = SuperDAL.GetSuperPets();
             //foreach (SuperPet sPut  in lst) {
             //    sPut.PetType = SuperDAL.GetPetType(sPut.PetTypeID);
             //    sPut.SuperHero = SuperDAL.GetSuperHero(sPut.SuperHeroID);
             //}
-            return View(lst);
+            if (page != null && count != null) {
+                int number = (int)count;
+                int start = ((int)page - 1) * number;
+                int pages = lst.Count / number;
+               // ViewBag.Pager = new { start = start, pages = pages, current = start, count = number };
+                return View(lst.Skip(start).Take(number));
+            } else {
+                return View(lst);
+            }
         }
 
         // GET: SuperPet/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Details(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             SuperPet superPet = SuperDAL.GetSuperPet((int)id);
-            if (superPet == null)
-            {
+            if (superPet == null) {
                 return NotFound();
             }
 
@@ -49,8 +50,7 @@ namespace MVCDemo.Controllers
         }
 
         // GET: SuperPet/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID");
             //ViewData["SuperHeroID"] = new SelectList(_context.SuperHero, "ID", "FirstName");
             return View();
@@ -61,10 +61,8 @@ namespace MVCDemo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,PetTypeID,SuperHeroID,ID")] SuperPet superPet)
-        {
-            if (ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([Bind("Name,PetTypeID,SuperHeroID,ID")] SuperPet superPet) {
+            if (ModelState.IsValid) {
                 //_context.Add(superPet);
                 //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -75,16 +73,13 @@ namespace MVCDemo.Controllers
         }
 
         // GET: SuperPet/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Edit(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             SuperPet superPet = SuperDAL.GetSuperPet((int)id); //= await _context.SuperPet.FindAsync(id);
-            if (superPet == null)
-            {
+            if (superPet == null) {
                 return NotFound();
             }
             //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID", superPet.PetTypeID);
@@ -97,29 +92,23 @@ namespace MVCDemo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,PetTypeID,SuperHeroID,ID")] SuperPet superPet)
-        {
-            if (id != superPet.ID)
-            {
+        public async Task<IActionResult> Edit(int id, [Bind("Name,PetTypeID,SuperHeroID,ID")] SuperPet superPet) {
+            if (id != superPet.ID) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     //_context.Update(superPet);
                     //await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
+                } catch (DbUpdateConcurrencyException) {
                     //if (!SuperPetExists(superPet.ID))
                     //{
                     //    return NotFound();
                     //}
                     //else
                     //{
-                        throw;
+                    throw;
                     //}
                 }
                 return RedirectToAction(nameof(Index));
@@ -130,10 +119,8 @@ namespace MVCDemo.Controllers
         }
 
         // GET: SuperPet/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Delete(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
@@ -142,8 +129,7 @@ namespace MVCDemo.Controllers
             //    .Include(s => s.SuperHero)
             //    .FirstOrDefaultAsync(m => m.ID == id);
             SuperPet superPet = SuperDAL.GetSuperPet((int)id);
-            if (superPet == null)
-            {
+            if (superPet == null) {
                 return NotFound();
             }
 
@@ -153,8 +139,7 @@ namespace MVCDemo.Controllers
         // POST: SuperPet/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(int id) {
             //var superPet = await _context.SuperPet.FindAsync(id);
             //_context.SuperPet.Remove(superPet);
             //await _context.SaveChangesAsync();
@@ -191,12 +176,12 @@ namespace MVCDemo.Controllers
             return Json(answer);
         }
 
-         [HttpPost]
+        [HttpPost]
         public ActionResult GetForSuperHero(int? id) {
-            if (id>0) {
+            if (id > 0) {
                 SuperHero tempHero = new SuperHero() { ID = (int)id };
                 List<SuperPet> sups = SuperDAL.GetSuperPets(tempHero);
-                return PartialView("Parts/_TableData",sups);
+                return PartialView("Parts/_TableData", sups);
 
             }
             return NotFound();
