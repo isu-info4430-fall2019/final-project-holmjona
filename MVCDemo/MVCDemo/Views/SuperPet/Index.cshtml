@@ -9,6 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="filterer">
+    Filter: By SuperHero
+    <form>
+        <input id="filterID" type="hidden" value="-1" />
+        <input id="filterText" type="text" data-url="SuperHero/Get" />
+        <button class="filterButton" id="btnFilter" data-action="SuperPet|SuperHero">Apply</button>
+    </form>
+    <div id="results">
+
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -25,23 +36,6 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PetType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SuperHero.FullName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @Html.Partial("Parts/_TableData")
     </tbody>
 </table>

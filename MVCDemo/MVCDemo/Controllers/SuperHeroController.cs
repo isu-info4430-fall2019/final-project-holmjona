@@ -146,5 +146,33 @@ namespace MVCDemo.Controllers {
         private bool SuperHeroExists(int id) {
             return _context.SuperHero.Any(e => e.ID == id);
         }
+
+        #region AJAX calls
+
+        [HttpPost]
+        public ActionResult Get(string searchtext) {
+            List<SuperHero> sups = SuperDAL.GetSuperHeroes();
+            List<object> answers = new List<object>();
+            if (!string.IsNullOrEmpty(searchtext)) {
+                foreach (SuperHero sup in sups) {
+                    if (sup.FirstName.ToUpper().Contains(searchtext.ToUpper())
+                        || sup.LastName.ToUpper().Contains(searchtext.ToUpper())) {
+                        answers.Add(new {
+                            text = sup.FullName,
+                            id = sup.ID
+                        });
+                    }
+                }
+            }
+            object answer = new {
+                success = true,
+                message = "Search results for: " + searchtext,
+                data = answers
+            };
+            return Json(answer);
+        }
+
+        #endregion
+
     }
 }

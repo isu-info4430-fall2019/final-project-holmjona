@@ -112,12 +112,28 @@ INSERT INTO Costumes (CostumeID,ColorMain,ColorSecondary,ColorTertiary,HasCape,H
 SET IDENTITY_INSERT dbo.Costumes OFF
 
 
+SET IDENTITY_INSERT dbo.SuperHeroes ON
 
 INSERT INTO SuperHeroes 
-			(FirstName,LastName,DateOfBirth,EyeColor,HeightInInches,AlterEgoID,SideKickID,CostumeID)
-			VALUES ('Super','Man','12/24/1955',0,73,-1,-1,1)
-				,('Bat','Man','4/5/1960',0,69,-1,-1,2)
-				,('The','Flash','4/5/1980',0,65,-1,-1,3)
-				,('Wonder','Woman','4/5/1960',0,68,-1,-1,4)
+			(SuperHeroID,FirstName,LastName,DateOfBirth,EyeColor,HeightInInches,AlterEgoID,SideKickID,CostumeID)
+			VALUES (1,'Super','Man','12/24/1955',0,73,-1,-1,1)
+				,(2,'Bat','Man','4/5/1960',0,69,-1,-1,2)
+				,(3,'The','Flash','4/5/1980',0,65,-1,-1,3)
+				,(4,'Wonder','Woman','4/5/1960',0,68,-1,-1,4)
+SET IDENTITY_INSERT dbo.SuperHeroes OFF
 
 
+SET IDENTITY_INSERT dbo.PetTypes ON
+INSERT INTO PetTypes (PetTypeID, Name)
+			VALUES (1,'Dog'),(2,'Cat'),(3,'Squirrel')
+SET IDENTITY_INSERT dbo.PetTypes OFF
+
+SET IDENTITY_INSERT dbo.SuperPets ON
+INSERT INTO SuperPets (SuperPetID,Name,PetTypeID,SuperHeroID)
+			VALUES (1,'Fluffy',2,1)
+			,(2,'Ruff',1,2)
+			,(3,'Arco',3,3)
+			,(4,'Larry',2,3)
+			,(5,'Mildred',3,1)
+			,(6,'Mighty',2,2)
+SET IDENTITY_INSERT dbo.SuperPets OFF

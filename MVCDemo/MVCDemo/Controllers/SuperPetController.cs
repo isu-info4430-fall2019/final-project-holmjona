@@ -165,5 +165,45 @@ namespace MVCDemo.Controllers
         //{
         //    return _context.SuperPet.Any(e => e.ID == id);
         //}
+
+
+        #region AJAX calls
+
+        [HttpPost]
+        public ActionResult Get(string searchtext) {
+            List<SuperPet> sups = SuperDAL.GetSuperPets();
+            List<object> answers = new List<object>();
+            if (!string.IsNullOrEmpty(searchtext)) {
+                foreach (SuperPet sup in sups) {
+                    if (sup.Name.ToUpper().Contains(searchtext.ToUpper())) {
+                        answers.Add(new {
+                            text = sup.Name,
+                            id = sup.ID
+                        });
+                    }
+                }
+            }
+            object answer = new {
+                success = true,
+                message = "Search results for: " + searchtext,
+                data = answers
+            };
+            return Json(answer);
+        }
+
+         [HttpPost]
+        public ActionResult GetForSuperHero(int? id) {
+            if (id>0) {
+                SuperHero tempHero = new SuperHero() { ID = (int)id };
+                List<SuperPet> sups = SuperDAL.GetSuperPets(tempHero);
+                return PartialView("Parts/_TableData",sups);
+
+            }
+            return NotFound();
+        }
+
+        #endregion
+
+
     }
 }
