@@ -20,6 +20,11 @@
 
     </div>
 </div>
+<ul>
+    <li><a href="?page=1&count=2"> Show Pages (2 per page)</a></li>
+    <li><a href="?page=1&count=3"> Show Pages (3 per page)</a></li>
+    <li><a href="?page=1&count=4"> Show Pages (4 per page)</a></li>
+</ul>
 <table class="table">
     <thead>
         <tr>
@@ -39,10 +44,4 @@
         @Html.Partial("Parts/_TableData")
     </tbody>
 </table>
-@if(ViewBag.Pager!= null) {
-    <div>
-        @for(int pgNum = 0; pgNum < ViewBag.Pager.pages; pgNum++) {
-            <a href="?page=@pgNum?count=@ViewBag.Pager.count">@pgNum</a>
-        }
-    </div>
-}
+@Html.Partial("Pagination", (Pager)ViewBag.Pager)

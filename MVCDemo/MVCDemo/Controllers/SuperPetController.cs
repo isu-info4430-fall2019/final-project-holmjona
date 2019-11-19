@@ -25,11 +25,9 @@ namespace MVCDemo.Controllers {
             //    sPut.SuperHero = SuperDAL.GetSuperHero(sPut.SuperHeroID);
             //}
             if (page != null && count != null) {
-                int number = (int)count;
-                int start = ((int)page - 1) * number;
-                int pages = lst.Count / number;
-               // ViewBag.Pager = new { start = start, pages = pages, current = start, count = number };
-                return View(lst.Skip(start).Take(number));
+                Pager pg = new Pager(page,count,lst.Count);
+                ViewBag.Pager = pg;
+                return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
             } else {
                 return View(lst);
             }
