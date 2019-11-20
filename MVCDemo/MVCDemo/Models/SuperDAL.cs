@@ -1362,7 +1362,8 @@ namespace MVCDemo {
                 comm.Parameters.AddWithValue("@" + SuperPet.db_Name, obj.Name);
                 comm.Parameters.AddWithValue("@" + SuperPet.db_PetType, obj.PetTypeID);
                 comm.Parameters.AddWithValue("@" + SuperPet.db_SuperHero, obj.SuperHeroID);
-                return AddObject(comm, "@" + SuperPet.db_ID);
+                obj.ID = AddObject(comm, "@" + SuperPet.db_ID);
+                return obj.ID;
             } catch (Exception ex) {
             }
             return -1;

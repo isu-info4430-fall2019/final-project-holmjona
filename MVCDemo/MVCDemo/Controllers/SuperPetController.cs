@@ -49,8 +49,8 @@ namespace MVCDemo.Controllers {
 
         // GET: SuperPet/Create
         public IActionResult Create() {
-            //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID");
-            //ViewData["SuperHeroID"] = new SelectList(_context.SuperHero, "ID", "FirstName");
+            ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+            ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View();
         }
 
@@ -63,10 +63,12 @@ namespace MVCDemo.Controllers {
             if (ModelState.IsValid) {
                 //_context.Add(superPet);
                 //await _context.SaveChangesAsync();
+                //SuperDAL.AddSuperPet(superPet);
+                superPet.dbAdd();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID", superPet.PetTypeID);
-            //ViewData["SuperHeroID"] = new SelectList(_context.SuperHero, "ID", "FirstName", superPet.SuperHeroID);
+            ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+            ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View(superPet);
         }
 
@@ -80,8 +82,8 @@ namespace MVCDemo.Controllers {
             if (superPet == null) {
                 return NotFound();
             }
-            //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID", superPet.PetTypeID);
-            //ViewData["SuperHeroID"] = new SelectList(_context.SuperHero, "ID", "FirstName", superPet.SuperHeroID);
+            ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+            ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View(superPet);
         }
 
@@ -99,6 +101,8 @@ namespace MVCDemo.Controllers {
                 try {
                     //_context.Update(superPet);
                     //await _context.SaveChangesAsync();
+                    //SuperDAL.UpdateCitizen(superPet);
+                    superPet.dbUpdate();
                 } catch (DbUpdateConcurrencyException) {
                     //if (!SuperPetExists(superPet.ID))
                     //{
@@ -111,8 +115,8 @@ namespace MVCDemo.Controllers {
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["PetTypeID"] = new SelectList(_context.Set<PetType>(), "ID", "ID", superPet.PetTypeID);
-            //ViewData["SuperHeroID"] = new SelectList(_context.SuperHero, "ID", "FirstName", superPet.SuperHeroID);
+            ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+            ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View(superPet);
         }
 

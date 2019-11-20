@@ -83,7 +83,6 @@ namespace MVCDemo {
         /// Gets or sets the SuperHero for this ChangeMeOut.SuperPet object.
         /// </summary>
         /// <remarks></remarks>
-        
         public SuperHero SuperHero {
             get {
                 if (_SuperHero == null) {
