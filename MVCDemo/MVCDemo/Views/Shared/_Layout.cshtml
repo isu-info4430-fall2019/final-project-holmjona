@@ -18,7 +18,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
+                    @*<partial name="_LoginPartial" />*@
+                    <partial name="Login" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -40,7 +41,7 @@
             </div>
         </nav>
     </header>
-    @Html.Partial("../Shared/Login")
+    @*@Html.Partial("../Shared/Login")*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

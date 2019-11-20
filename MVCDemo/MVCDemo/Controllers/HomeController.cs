@@ -18,6 +18,19 @@ namespace MVCDemo.Controllers {
         }
 
         public IActionResult Index() {
+            List<string> salts = new List<string>();
+            for (int i = 0; i < 6; i++) {
+                salts.Add(Hasher.GenerateSalt());
+            }
+
+            ViewBag.Hash = new List<Tuple<string, string>>() {
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[0]),salts[0]),
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[1]),salts[1]),
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[2]),salts[2]),
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[3]),salts[3]),
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[4]),salts[4]),
+                new Tuple<string,string>(Hasher.HashIt("tester",salts[5]),salts[5])
+            };
             return View();
         }
 
@@ -36,19 +49,19 @@ namespace MVCDemo.Controllers {
         public IActionResult Jump() {
             ViewData["Title"] = "Awesommes!!";
             ViewBag.FuzzyAnimals = "are cute";
-            
+
             return View("PinkPanther");
         }
 
-        public IActionResult Login(string UserName, string Password) {
-             
+        //public IActionResult Login(string UserName, string Password) {
 
-            System.IO.StreamWriter fs = new System.IO.StreamWriter("secrets.psw");
-            fs.Write(UserName + " | " + Password);
-            fs.Close();
 
-            return View();
-        }
+        //    System.IO.StreamWriter fs = new System.IO.StreamWriter("secrets.psw");
+        //    fs.Write(UserName + " | " + Password);
+        //    fs.Close();
+
+        //    return View();
+        //}
 
 
         public IActionResult Privacy() {

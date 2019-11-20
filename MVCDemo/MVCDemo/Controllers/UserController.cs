@@ -12,10 +12,27 @@ namespace MVCDemo.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Handle Login request from user.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Login(string username, string password) {
+            Models.User usr = SuperDAL.GetUser(username, password);
+            if (usr != null) {
+                // success
+                Response.Cookies.Append("user", SuperDAL.GetCookie(usr));
+            } else {
+                // failed
+            }
+             return  RedirectToAction("Index", "Home");
+        }
 
-            return View();
+        public ActionResult Logout() {
+            Response.Cookies.Delete("user");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register() {

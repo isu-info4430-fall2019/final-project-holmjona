@@ -1,14 +1,15 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@if (true) {
-<form action="User/Login" method="post">
-    <label>Username</label>
-    <input type="text" name="username" />
-    <label>Password</label>
-    <input type="password" name="password" />
-    <input type="submit" value="Login" />
-</form>
+@{MVCDemo.Models.User usr = SuperDAL.GetUserForCookie(Context.Request.Cookies["user"]);}
+@if (usr == null) {
+    <form action="User/Login" method="post">
+        <label for="txtUserName">Username:</label>
+        <input id="txtUserName" type="text" name="username" />
+        <label for="txtPassword">Password:</label>
+        <input id="txtPassword" type="password" name="password" />
+        <input type="submit" value="Sign In" />
+    </form>
 } else {
-    <span>Hello Logged in user</span>
+    <span>Hello, @usr.UserName <a asp-action="Logout" asp-controller="User">Sign Out</a></span>
 }

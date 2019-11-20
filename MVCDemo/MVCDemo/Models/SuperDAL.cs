@@ -1408,5 +1408,53 @@ namespace MVCDemo {
 
         #endregion
 
+        #region User
+        public static List<Models.User> GetUsers() {
+            return Models.Users.List;
+        }
+        public static Models.User GetUser(int id) {
+            // Use fake data store
+          return  Models.Users.GetByID(id);
+        }
+        public static Models.User GetUser(string uName,string pWord) {
+            // Use fake data store
+            Models.User usr = Models.Users.GetByUserName(uName);
+            if (usr != null) {
+                if (usr.Password == Models.Hasher.HashIt(pWord,usr.Salt)) {
+                    // password match
+                } else {
+                    // no match
+                    usr = null;
+                }
+            }
+            return usr;
+        }
+
+        public static string GetCookie(Models.User usr) {
+            return usr.Salt + usr.ID;
+        }
+            public static Models.User GetUserForCookie(string cookValue) {
+            // Use fake data store
+            Models.User usr = null;
+            if (!string.IsNullOrEmpty(cookValue)) {
+                // we have a cookie set
+                int sePlace = cookValue.LastIndexOf("=") + 1;
+                string saltCheck = cookValue.Substring(0, sePlace);
+                string strID = cookValue.Substring(sePlace);
+                int id;
+                if (int.TryParse(strID, out id)) {
+                    usr = Models.Users.GetByID(id);
+                    if (usr.Salt == saltCheck) {
+                        // still matches not modified 
+                    } else {
+                        // salt and or ID changed. Assuming hacking attempt.
+                        usr = null;
+                    }
+                }
+            }
+            return usr;
+        }
+        #endregion
+
     }
 }
