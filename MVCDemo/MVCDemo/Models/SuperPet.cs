@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace MVCDemo {
         /// Gets or sets the PetType for this ChangeMeOut.SuperPet object.
         /// </summary>
         /// <remarks></remarks>
-        
+        [ValidateNever]
         public PetType PetType {
             get {
                 if (_PetType == null) {
@@ -83,6 +84,7 @@ namespace MVCDemo {
         /// Gets or sets the SuperHero for this ChangeMeOut.SuperPet object.
         /// </summary>
         /// <remarks></remarks>
+        [ValidateNever]
         public SuperHero SuperHero {
             get {
                 if (_SuperHero == null) {

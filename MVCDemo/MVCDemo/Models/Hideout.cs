@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ namespace MVCDemo {
 
         #endregion
 
+        [ValidateNever]
         public List<A> Members {
             get { return _Members; }
         }

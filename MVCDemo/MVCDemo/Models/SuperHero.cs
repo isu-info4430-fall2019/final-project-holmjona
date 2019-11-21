@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -89,7 +90,7 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
         /// Gets or sets the Costume for this ChangeMeOut.SuperHeroe object.
         /// </summary>
         /// <remarks></remarks>
-        
+        [ValidateNever]
         public Costume Costume {
             get {
                 if (_Costume == null) {
@@ -118,7 +119,7 @@ public class SuperHero :Person,ISideKickable<SuperHero>,IComparable<SuperHero> {
                 _CostumeID = value;
             }
         }
-
+        [ValidateNever]
         public List<SuperPet> SuperPets {
             get {
                 if(_SuperPets == null) {

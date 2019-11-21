@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace MVCDemo {
             }
         }
 
+        [ValidateNever]
         public static List<Person> People {
             get {
                 if (_People == null) {
@@ -43,6 +45,7 @@ namespace MVCDemo {
             }
         }
 
+        [ValidateNever]
         public static List<SuperHero> Supers {
             get {
                 if (_supers == null) populateUniverse();
@@ -54,6 +57,7 @@ namespace MVCDemo {
             }
         }
 
+        [ValidateNever]
         public static List<Villian> Vills {
             get {
                 if (_vills == null) populateUniverse();
@@ -65,6 +69,7 @@ namespace MVCDemo {
             }
         }
 
+        [ValidateNever]
         public static List<Citizen> Innocs {
             get {
                 if (_innocs == null) populateUniverse();
@@ -96,6 +101,7 @@ namespace MVCDemo {
             }
         }
 
+        [ValidateNever]
         public static Hideout<SuperHero> HallOfJustice {
             get {
                 if(_HallOfJustice == null) {

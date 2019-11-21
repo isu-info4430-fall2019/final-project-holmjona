@@ -5,6 +5,8 @@ using System.Net;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace MVCDemo {
     /// <summary>
     /// TODO: Comment this
@@ -44,6 +46,8 @@ namespace MVCDemo {
         /// </summary>
         /// <remarks></remarks>
         [XmlIgnore]
+        [ValidateNever]
+
         public Hideout<M> Hideout {
             get {
                 if (_Hideout == null) {
