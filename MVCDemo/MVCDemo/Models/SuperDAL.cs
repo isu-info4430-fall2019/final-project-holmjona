@@ -1095,12 +1095,26 @@ namespace MVCDemo {
             SqlCommand comm = new SqlCommand("sproc_HideoutMemberAdd");
             try {
                 comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Hideout, obj.HideoutID);
-                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Member, obj.Member);
+                comm.Parameters.AddWithValue("@" + HideoutMember<object>.db_Member, obj.MemberID);
                 return AddObject(comm, "@" + HideoutMember<SuperHero>.db_ID);
             } catch (Exception ex) {
             }
             return -1;
         }
+
+
+        internal static int AddHideoutMember(int hideoutID, int memberID) {
+            if (hideoutID < 1 || memberID < 1) return -1;
+            SqlCommand comm = new SqlCommand("sproc_HideoutMemberAdd");
+            try {
+                comm.Parameters.AddWithValue("@HideoutID", hideoutID);
+                comm.Parameters.AddWithValue("@MemberID", memberID);
+                return AddObject(comm, "@HideoutMemberID");
+            } catch (Exception ex) {
+            }
+            return -1;
+        }
+
 
 
         /// <summary>
@@ -1121,6 +1135,7 @@ namespace MVCDemo {
             return -1;
         }
 
+        
 
         /// <summary>
         /// Attempts to delete the database entry corresponding to the HideoutMember
