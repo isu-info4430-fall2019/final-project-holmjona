@@ -61,7 +61,11 @@
             @Html.DisplayNameFor(model => model.SuperPets)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SuperPets)
+            <ul>
+            @foreach (SuperPet sPet in Model.SuperPets) {
+                <li>@sPet.Name</li>
+            }
+                </ul>
         </dd>
     </dl>
 </div>
