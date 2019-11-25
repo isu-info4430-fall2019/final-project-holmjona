@@ -12,16 +12,16 @@ namespace MVCDemo.Controllers {
     public class SuperHeroController : Controller {
         private readonly DELETEMEContext _context;
 
-        public SuperHeroController(DELETEMEContext context) {
-            _context = context;
+        public SuperHeroController(){//DELETEMEContext context) {
+            //_context = context;
         }
 
         // GET: SuperHero
         public async Task<IActionResult> Index() {
             List<SuperHero> sups = DAL.SuperHeroesGet();
-            foreach (SuperHero sup in sups) {
-                List<SuperPet> pets = sup.SuperPets;
-            }
+            //foreach (SuperHero sup in sups) {
+            //    List<SuperPet> pets = sup.SuperPets;
+            //}
             return View(sups);
         }
 
@@ -54,6 +54,21 @@ namespace MVCDemo.Controllers {
 
         // GET: SuperHero/Create
         public IActionResult Create() {
+            //IClassName -- Interface - Contract - Required set of Methods.
+            //ClassName --- Class - Creates Objects (models)
+
+            SuperHero sup = new SuperHero();
+            //sup.cal
+            ISideKickable<Villian> canHaveSideKick;
+            //canHaveSideKick = sup;
+            canHaveSideKick = new Villian();
+
+            canHaveSideKick.callForHelp(23);
+
+            //ActionResult;
+            //Json();
+
+
             return View();
         }
         //[HttpPost]
@@ -71,8 +86,9 @@ namespace MVCDemo.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Height,FirstName,LastName,BirthDate,ShoeSize,EyeColor")] SuperHero superHero) {
             if (ModelState.IsValid) {
-                _context.Add(superHero);
-                await _context.SaveChangesAsync();
+                //_context.Add(superHero);
+                //await _context.SaveChangesAsync();
+                SuperDAL.AddSuperHero(superHero);
                 return RedirectToAction(nameof(Index));
             }
             return View(superHero);

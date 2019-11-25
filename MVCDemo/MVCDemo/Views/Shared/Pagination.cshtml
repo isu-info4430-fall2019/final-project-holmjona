@@ -7,7 +7,7 @@
         @for (int pgNum = 1; pgNum < Model.CountOfPages + 1; pgNum++) {
             bool curr = pgNum == Model.CurrentPageNumber;
             <a href="?page=@pgNum&count=@Model.CountPerPage"
-               class="@(curr ?"selected":"") ">
+               class="@(curr ?"selected":"")">
                 @pgNum@(curr ? "*" : "")
             </a>
         }
