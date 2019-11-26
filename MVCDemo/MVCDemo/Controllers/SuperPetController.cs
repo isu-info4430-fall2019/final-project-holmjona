@@ -12,7 +12,7 @@ namespace MVCDemo.Controllers {
     public class SuperPetController : Controller {
 
 
-        public SuperPetController(DELETEMEContext context) {
+        public SuperPetController() {
 
         }
 
@@ -75,8 +75,8 @@ namespace MVCDemo.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,PetTypeID,SuperHeroID,ID")] SuperPet superPet) {
             if (ModelState.IsValid) {
-                //_context.Add(superPet);
-                //await _context.SaveChangesAsync();
+                //superPet);
+                //
                 //SuperDAL.AddSuperPet(superPet);
                 superPet.dbAdd();
                 return RedirectToAction(nameof(Index));
@@ -92,7 +92,7 @@ namespace MVCDemo.Controllers {
                 return NotFound();
             }
 
-            SuperPet superPet = SuperDAL.GetSuperPet((int)id); //= await _context.SuperPet.FindAsync(id);
+            SuperPet superPet = SuperDAL.GetSuperPet((int)id); //= await SuperPet((int)id);
             if (superPet == null) {
                 return NotFound();
             }
@@ -113,8 +113,8 @@ namespace MVCDemo.Controllers {
 
             if (ModelState.IsValid) {
                 try {
-                    //_context.Update(superPet);
-                    //await _context.SaveChangesAsync();
+                    //superPet);
+                    //
                     //SuperDAL.UpdateCitizen(superPet);
                     superPet.dbUpdate();
                 } catch (DbUpdateConcurrencyException) {
@@ -140,7 +140,7 @@ namespace MVCDemo.Controllers {
                 return NotFound();
             }
 
-            //var superPet = await _context.SuperPet
+            //var superPet= SuperDAL.GetSuperPet
             //    .Include(s => s.PetType)
             //    .Include(s => s.SuperHero)
             //    .FirstOrDefaultAsync(m => m.ID == id);
@@ -156,15 +156,15 @@ namespace MVCDemo.Controllers {
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {
-            //var superPet = await _context.SuperPet.FindAsync(id);
-            //_context.SuperPet.Remove(superPet);
-            //await _context.SaveChangesAsync();
+            //var superPet= SuperDAL.GetSuperPet((int)id);
+            //SuperPet.Remove(superPet);
+            //
             return RedirectToAction(nameof(Index));
         }
 
         //private bool SuperPetExists(int id)
         //{
-        //    return _context.SuperPet.Any(e => e.ID == id);
+        //    return SuperPet.Any(e => e.ID == id);
         //}
 
 

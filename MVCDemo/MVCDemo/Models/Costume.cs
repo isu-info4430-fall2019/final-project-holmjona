@@ -76,6 +76,36 @@ namespace MVCDemo {
         }
 
         /// <summary>
+        /// Gets or sets the ColorMain for this ChangeMeOut.Costume object.
+        /// </summary>
+        /// <remarks></remarks>
+        public string ColorMainAsHexString {
+            get {
+                return GetAsHexString( _ColorMain);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ColorSecondary for this ChangeMeOut.Costume object.
+        /// </summary>
+        /// <remarks></remarks>
+        public string ColorSecondaryAsHexString {
+            get {
+                return GetAsHexString( _ColorSecondary);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ColorTertiary for this ChangeMeOut.Costume object.
+        /// </summary>
+        /// <remarks></remarks>
+        public string ColorTertiaryAsHexString {
+            get {
+                return GetAsHexString( _ColorTertiary);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the HasCape for this ChangeMeOut.Costume object.
         /// </summary>
         /// <remarks></remarks>
@@ -100,7 +130,6 @@ namespace MVCDemo {
                 _HasMask = value;
             }
         }
-
 
         #endregion
 
@@ -146,6 +175,14 @@ namespace MVCDemo {
             _HasMask = (bool)dr[db_HasMask];
         }
 
+        #endregion
+
+        #region Private Functions
+        private string GetAsHexString(int i) {
+
+            return i.ToString("X").PadLeft(6,'0');
+
+        }
         #endregion
 
         public override string ToString() {

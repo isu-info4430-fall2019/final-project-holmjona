@@ -10,10 +10,10 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers {
     public class SuperHeroController : Controller {
-        private readonly DELETEMEContext _context;
+        
 
         public SuperHeroController(){//DELETEMEContext context) {
-            //_context = context;
+            //
         }
 
         // GET: SuperHero
@@ -35,7 +35,7 @@ namespace MVCDemo.Controllers {
                 1,2,3,4,4,5
             };
 
-            //var superHero = await _context.SuperHero
+            //var superHero= SuperDAL.GetSuperHero
             //    .FirstOrDefaultAsync(m => m.ID == id);
             SuperHero superHero = DAL.SuperHeroesGet((int)id);
             if (superHero == null) {
@@ -86,8 +86,8 @@ namespace MVCDemo.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Height,FirstName,LastName,BirthDate,ShoeSize,EyeColor")] SuperHero superHero) {
             if (ModelState.IsValid) {
-                //_context.Add(superHero);
-                //await _context.SaveChangesAsync();
+                //superHero);
+                //
                 SuperDAL.AddSuperHero(superHero);
                 return RedirectToAction(nameof(Index));
             }
@@ -100,7 +100,7 @@ namespace MVCDemo.Controllers {
                 return NotFound();
             }
 
-            //SuperHero superHero = await _context.SuperHero.FindAsync(id);
+            //SuperHero superHero= SuperDAL.GetSuperHero((int)id);
             SuperHero sup = DAL.SuperHeroesGet((int)id);
             if (sup == null) {
                 return NotFound();
@@ -120,14 +120,10 @@ namespace MVCDemo.Controllers {
 
             if (ModelState.IsValid) {
                 try {
-                    _context.Update(superHero);
-                    await _context.SaveChangesAsync();
+                    superHero.dbUpdate();
+                    
                 } catch (DbUpdateConcurrencyException) {
-                    if (!SuperHeroExists(superHero.ID)) {
-                        return NotFound();
-                    } else {
-                        throw;
-                    }
+                   
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -140,8 +136,7 @@ namespace MVCDemo.Controllers {
                 return NotFound();
             }
 
-            var superHero = await _context.SuperHero
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var superHero= SuperDAL.GetSuperHero((int)id);
             if (superHero == null) {
                 return NotFound();
             }
@@ -153,14 +148,10 @@ namespace MVCDemo.Controllers {
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {
-            var superHero = await _context.SuperHero.FindAsync(id);
-            _context.SuperHero.Remove(superHero);
-            await _context.SaveChangesAsync();
+            var superHero= SuperDAL.GetSuperHero((int)id);
+            superHero.dbRemove();
+            
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SuperHeroExists(int id) {
-            return _context.SuperHero.Any(e => e.ID == id);
         }
 
         #region AJAX calls

@@ -10,24 +10,22 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers
 {
-    public class CitizenController : Controller
+    public class CityController : Controller
     {
         
 
-        public CitizenController()
+        public CityController()
         {
-            //
+            
         }
 
-        // GET: Citizen
+        // GET: City
         public async Task<IActionResult> Index()
         {
-            List<Citizen> cits = new List<Citizen>();
-
-            return View(cits);
+            return View(SuperDAL.GetCities());
         }
 
-        // GET: Citizen/Details/5
+        // GET: City/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,38 +33,38 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var city= SuperDAL.GetCity((int)id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(city);
         }
 
-        // GET: Citizen/Create
+        // GET: City/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Citizen/Create
+        // POST: City/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Create([Bind("Name,ID")] City city)
         {
             if (ModelState.IsValid)
             {
-                citizen.dbAdd();
+                city.dbAdd();
                 
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            return View(city);
         }
 
-        // GET: Citizen/Edit/5
+        // GET: City/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +72,22 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var city= SuperDAL.GetCity((int)id);
+            if (city == null)
             {
                 return NotFound();
             }
-            return View(citizen);
+            return View(city);
         }
 
-        // POST: Citizen/Edit/5
+        // POST: City/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,ID")] City city)
         {
-            if (id != citizen.ID)
+            if (id != city.ID)
             {
                 return NotFound();
             }
@@ -98,19 +96,19 @@ namespace MVCDemo.Controllers
             {
                 try
                 {
-                    citizen.dbUpdate();
+                    city.dbUpdate();
                     
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    
+                   
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            return View(city);
         }
 
-        // GET: Citizen/Delete/5
+        // GET: City/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,22 +116,22 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var city= SuperDAL.GetCity((int)id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(city);
         }
 
-        // POST: Citizen/Delete/5
+        // POST: City/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var citizen= SuperDAL.GetCitizen((int)id);
-            citizen.dbRemove();
+            var city= SuperDAL.GetCity((int)id);
+            city.dbRemove();
             
             return RedirectToAction(nameof(Index));
         }

@@ -19,5 +19,13 @@ namespace MVCDemo.Models
         public DbSet<MVCDemo.SuperHero> SuperHero { get; set; }
 
         public DbSet<MVCDemo.SuperPet> SuperPet { get; set; }
+
+        public DbSet<MVCDemo.City> City { get; set; }
+
+        public DbSet<MVCDemo.Costume> Costume { get; set; }
+
+        public DbSet<MVCDemo.PetType> PetType { get; set; }
+
+        public DbSet<MVCDemo.Villian> Villian { get; set; }
     }
 }

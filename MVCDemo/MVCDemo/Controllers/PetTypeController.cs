@@ -10,24 +10,22 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers
 {
-    public class CitizenController : Controller
+    public class PetTypeController : Controller
     {
         
 
-        public CitizenController()
+        public PetTypeController()
         {
-            //
+            
         }
 
-        // GET: Citizen
+        // GET: PetType
         public async Task<IActionResult> Index()
         {
-            List<Citizen> cits = new List<Citizen>();
-
-            return View(cits);
+            return View(SuperDAL.GetPetTypes());
         }
 
-        // GET: Citizen/Details/5
+        // GET: PetType/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,38 +33,37 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var petType= SuperDAL.GetPetType((int)id);
+            if (petType == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(petType);
         }
 
-        // GET: Citizen/Create
+        // GET: PetType/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Citizen/Create
+        // POST: PetType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Create([Bind("Name,ID")] PetType petType)
         {
             if (ModelState.IsValid)
             {
-                citizen.dbAdd();
-                
+                petType.dbAdd();
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            return View(petType);
         }
 
-        // GET: Citizen/Edit/5
+        // GET: PetType/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +71,22 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var petType= SuperDAL.GetPetType((int)id);
+            if (petType == null)
             {
                 return NotFound();
             }
-            return View(citizen);
+            return View(petType);
         }
 
-        // POST: Citizen/Edit/5
+        // POST: PetType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,ID")] PetType petType)
         {
-            if (id != citizen.ID)
+            if (id != petType.ID)
             {
                 return NotFound();
             }
@@ -98,19 +95,18 @@ namespace MVCDemo.Controllers
             {
                 try
                 {
-                    citizen.dbUpdate();
-                    
+                    petType.dbUpdate();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    
+                   
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            return View(petType);
         }
 
-        // GET: Citizen/Delete/5
+        // GET: PetType/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,25 +114,25 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            var petType= SuperDAL.GetPetType((int)id);
+            if (petType == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(petType);
         }
 
-        // POST: Citizen/Delete/5
+        // POST: PetType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var citizen= SuperDAL.GetCitizen((int)id);
-            citizen.dbRemove();
-            
+            var petType= SuperDAL.GetPetType((int)id);
+            petType.dbRemove();
             return RedirectToAction(nameof(Index));
         }
 
+      
     }
 }

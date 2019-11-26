@@ -10,63 +10,61 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers
 {
-    public class CitizenController : Controller
+    public class VillianController : Controller
     {
         
 
-        public CitizenController()
+        public VillianController()
         {
-            //
+            
         }
 
-        // GET: Citizen
-        public async Task<IActionResult> Index()
+        // GET: Villian
+        public IActionResult Index()
         {
-            List<Citizen> cits = new List<Citizen>();
-
-            return View(cits);
+            return View(SuperDAL.GetVillians());
         }
 
-        // GET: Citizen/Details/5
+        // GET: Villian/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            Villian villian = SuperDAL.GetVillian((int)id);
+            if (villian == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(villian);
         }
 
-        // GET: Citizen/Create
+        // GET: Villian/Create
         public IActionResult Create()
         {
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID");
             return View();
         }
 
-        // POST: Citizen/Create
+        // POST: Villian/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Create([Bind("CostumeID,FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Villian villian)
         {
             if (ModelState.IsValid)
             {
-                citizen.dbAdd();
-                
+                villian.dbAdd();
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            return View(villian);
         }
 
-        // GET: Citizen/Edit/5
+        // GET: Villian/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +72,23 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            Villian villian = SuperDAL.GetVillian((int)id);
+            if (villian == null)
             {
                 return NotFound();
             }
-            return View(citizen);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            return View(villian);
         }
 
-        // POST: Citizen/Edit/5
+        // POST: Villian/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Citizen citizen)
+        public async Task<IActionResult> Edit(int id, [Bind("CostumeID,FirstName,LastName,BirthDate,ShoeSize,EyeColor,Height,ID")] Villian villian)
         {
-            if (id != citizen.ID)
+            if (id != villian.ID)
             {
                 return NotFound();
             }
@@ -98,19 +97,19 @@ namespace MVCDemo.Controllers
             {
                 try
                 {
-                    citizen.dbUpdate();
-                    
+                    villian.dbUpdate();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    
+                   
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(citizen);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            return View(villian);
         }
 
-        // GET: Citizen/Delete/5
+        // GET: Villian/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,25 +117,23 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var citizen= SuperDAL.GetCitizen((int)id);
-            if (citizen == null)
+            Villian villian = SuperDAL.GetVillian((int)id);
+            if (villian == null)
             {
                 return NotFound();
             }
 
-            return View(citizen);
+            return View(villian);
         }
 
-        // POST: Citizen/Delete/5
+        // POST: Villian/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var citizen= SuperDAL.GetCitizen((int)id);
-            citizen.dbRemove();
-            
+            var villian= SuperDAL.GetVillian((int)id);
+            villian.dbRemove();
             return RedirectToAction(nameof(Index));
         }
-
     }
 }
