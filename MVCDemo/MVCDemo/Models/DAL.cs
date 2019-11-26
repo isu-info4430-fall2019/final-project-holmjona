@@ -19,7 +19,7 @@ namespace MVCDemo.Models {
 
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "sprocSuperHeroesGet";
+                comm.CommandText = "sprocSuperHeroesGetAll";
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
 
                 conn.Open();

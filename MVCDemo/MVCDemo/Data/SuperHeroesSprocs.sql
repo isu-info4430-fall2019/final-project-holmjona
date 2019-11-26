@@ -830,6 +830,58 @@ GO
 
 --GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
 GO
+
+CREATE PROCEDURE dbo.sprocMembersGetForHideout
+@HideoutID int
+AS
+BEGIN
+     -- SET NOCOUNT ON added to prevent extra result sets from
+     -- interfering with SELECT statements.
+     SET NOCOUNT ON;
+
+     -- The following two will do the same basic idea.
+     -- Use the one that makes the most sense to you.
+     SELECT * FROM HideoutMembers hm
+     JOIN Members m ON m.MemberID = hm.MemberID
+        WHERE hm.HideoutID = @HideoutID
+     -- OR -- 
+     --SELECT m.* FROM HideoutMembers hm
+     --JOIN Members m ON m.MemberID = hm.MemberID
+     --   WHERE hm.HideoutID = @HideoutID
+
+END
+GO
+
+--GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
+GO
+
+
+CREATE PROCEDURE dbo.sprocHideoutsGetForMember
+@MemberID int
+AS
+BEGIN
+     -- SET NOCOUNT ON added to prevent extra result sets from
+     -- interfering with SELECT statements.
+     SET NOCOUNT ON;
+
+     -- The following two will do the same basic idea.
+     -- Use the one that makes the most sense to you.
+     SELECT * FROM HideoutMembers hm
+     JOIN Hideouts h ON h.HideoutID = hm.HideoutID
+        WHERE hm.MemberID = @MemberID
+     -- OR -- 
+     --SELECT m.* FROM HideoutMembers hm
+     --JOIN Hideouts m ON m.HideoutID = hm.HideoutID
+     --   WHERE hm.MemberID = @MemberID
+
+END
+GO
+--GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
+GO
+
+
+
+GO
 -- =============================================
 -- Author:		COB\holmjona
 -- Create date:	12 Nov 2019
