@@ -829,8 +829,12 @@ END
 GO
 
 --GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
-GO
 
+-- =============================================
+-- Author:		COB\holmjona
+-- Create date:	23 Nov 2019
+-- Description:	Retrieve all Members for a hideout.
+-- =============================================
 CREATE PROCEDURE dbo.sprocMembersGetForHideout
 @HideoutID int
 AS
@@ -839,23 +843,26 @@ BEGIN
      -- interfering with SELECT statements.
      SET NOCOUNT ON;
 
-     -- The following two will do the same basic idea.
-     -- Use the one that makes the most sense to you.
+	 -- The following two will do the same basic idea.
+	 -- Use the one that makes the most sense to you.
      SELECT * FROM HideoutMembers hm
-     JOIN Members m ON m.MemberID = hm.MemberID
-        WHERE hm.HideoutID = @HideoutID
-     -- OR -- 
-     --SELECT m.* FROM HideoutMembers hm
-     --JOIN Members m ON m.MemberID = hm.MemberID
-     --   WHERE hm.HideoutID = @HideoutID
+	 JOIN Members m ON m.MemberID = hm.MemberID
+		WHERE hm.HideoutID = @HideoutID
+	 -- OR -- 
+	 --SELECT m.* FROM HideoutMembers hm
+	 --JOIN Members m ON m.MemberID = hm.MemberID
+		--WHERE hm.HideoutID = @HideoutID
 
 END
 GO
 
---GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
-GO
+--GRANT EXECUTE ON dbo.sprocMembersGetForHideout TO sprocReadUser
 
-
+-- =============================================
+-- Author:		COB\holmjona
+-- Create date:	23 Nov 2019
+-- Description:	Retrieve all Hideouts for a member.
+-- =============================================
 CREATE PROCEDURE dbo.sprocHideoutsGetForMember
 @MemberID int
 AS
@@ -864,20 +871,20 @@ BEGIN
      -- interfering with SELECT statements.
      SET NOCOUNT ON;
 
-     -- The following two will do the same basic idea.
-     -- Use the one that makes the most sense to you.
+	 -- The following two will do the same basic idea.
+	 -- Use the one that makes the most sense to you.
      SELECT * FROM HideoutMembers hm
-     JOIN Hideouts h ON h.HideoutID = hm.HideoutID
-        WHERE hm.MemberID = @MemberID
-     -- OR -- 
-     --SELECT m.* FROM HideoutMembers hm
-     --JOIN Hideouts m ON m.HideoutID = hm.HideoutID
-     --   WHERE hm.MemberID = @MemberID
+	 JOIN Hideouts h ON h.HideoutID = hm.HideoutID
+		WHERE hm.MemberID = @MemberID
+	 -- OR -- 
+	 --SELECT m.* FROM HideoutMembers hm
+	 --JOIN Hideouts m ON m.HideoutID = hm.HideoutID
+		--WHERE hm.MemberID = @MemberID
 
 END
 GO
---GRANT EXECUTE ON dbo.sprocHideoutMembersGetAll TO sprocReadUser
-GO
+
+--GRANT EXECUTE ON dbo.sprocHideoutsGetForMember TO sprocReadUser
 
 
 

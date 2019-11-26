@@ -49,9 +49,23 @@ namespace MVCDemo.Controllers {
 
         // GET: SuperPet/Create
         public IActionResult Create() {
-            ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
-            ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
-            return View();
+            Models.User cUser = SuperDAL.GetUserForCookie(Request.Cookies["user"]);
+            if (cUser == null) {
+                // see Shared/_Layout for this error message use.
+                // TempData is used to pass data through a Redirect.
+                TempData["ErrorMessage"] ="You need to login to view add a Super Pet.";
+                // ViewBag and ViewData will only pass down to a View returned
+                // by this action. 
+                return RedirectToAction("Index", "Home");
+            } else if (cUser.Role.SuperHeroAdd) {
+                ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+                ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
+                return View();
+            } else {
+                TempData["ErrorMessage"] = "You do not have permission to Add a SuperPet.";
+                return RedirectToAction("Index", "Home");
+
+            }
         }
 
         // POST: SuperPet/Create

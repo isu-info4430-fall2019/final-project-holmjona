@@ -17,15 +17,15 @@ namespace MVCDemo.Models {
         private static void FillList() {
             _List = new List<User>();
             _List.Add(new User() { ID = 1, UserName = "tester", Salt = "NU7OqacPNlFCzwfgytskAg=="
-                ,Password = "HbfdqFOoL2qXmOs2QVcC0DwyAHk4GAGzzWlhR/BilPo="}); // tester
+                ,RoleID = 3, Password = "HbfdqFOoL2qXmOs2QVcC0DwyAHk4GAGzzWlhR/BilPo="}); //admin - tester
             _List.Add(new User() { ID = 2, UserName = "tested", Salt = "FptIqr/HROmmDE/BAJXblA=="
-                ,Password = "McJVYpypkS1zTkQ3DcdqNLaVjdiGukUxtXO8ZvQpGLU=" }); // tester
+                ,RoleID = 2, Password = "McJVYpypkS1zTkQ3DcdqNLaVjdiGukUxtXO8ZvQpGLU=" }); //data entry - tester
             _List.Add(new User() { ID = 3, UserName = "retest", Salt = "8xB3bhEtpq4ADaTsVKglUg=="
-                ,Password = "GEJ66bhiyYH/a871hLHWDnkIZbBR1aaHjU9i9sMeeM0=" }); // tester
+                ,RoleID = 4, Password = "GEJ66bhiyYH/a871hLHWDnkIZbBR1aaHjU9i9sMeeM0=" }); //power user - tester
             _List.Add(new User() { ID = 4, UserName = "retset", Salt = "DsEmUsECxWip7yg89t/k+w=="
-                ,Password = "7IDcjEVvr8XZmWpV/np4rH1KYvsrx2Fa0A8OT0TVekg=" }); // tester
+                ,RoleID = 2, Password = "7IDcjEVvr8XZmWpV/np4rH1KYvsrx2Fa0A8OT0TVekg=" }); //data entry - tester
             _List.Add(new User() { ID = 5, UserName = "west", Salt = "mbuoRIOV4no4m58niZ/EKA=="
-                ,Password = "H4gu1BEHl+9iBlOShmUvjxnaOSGHGZ677tvbEfVtCLE=" }); // tester
+                ,RoleID = 1, Password = "H4gu1BEHl+9iBlOShmUvjxnaOSGHGZ677tvbEfVtCLE=" }); //Anonymous - tester
         }
 
         internal static User GetByID(int id) {

@@ -42,6 +42,14 @@
         </nav>
     </header>
     @*@Html.Partial("../Shared/Login")*@
+<div id="messages">
+    @if (TempData["SuccessMessage"] != null) {
+        <div class="badge-success success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null) {
+        <div class="alert-warning error">@TempData["ErrorMessage"]</div>
+    }
+</div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

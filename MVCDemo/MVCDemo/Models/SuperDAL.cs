@@ -1430,11 +1430,15 @@ namespace MVCDemo {
         }
         public static Models.User GetUser(int id) {
             // Use fake data store
-          return  Models.Users.GetByID(id);
+          Models.User usrFromDB =  Models.Users.GetByID(id);
+            // fill from fake data call
+            return new Models.User(usrFromDB);
         }
         public static Models.User GetUser(string uName,string pWord) {
             // Use fake data store
-            Models.User usr = Models.Users.GetByUserName(uName);
+            Models.User usrFromDB =  Models.Users.GetByUserName(uName);
+            // fill from fake data call
+            Models.User usr = new Models.User(usrFromDB);
             if (usr != null) {
                 if (usr.Password == Models.Hasher.HashIt(pWord,usr.Salt)) {
                     // password match
@@ -1469,6 +1473,18 @@ namespace MVCDemo {
                 }
             }
             return usr;
+        }
+        #endregion
+
+        #region Role
+        public static List<Models.Role> GetRoles() {
+            return Models.Roles.List;
+        }
+        public static Models.Role GetRole(int id) {
+            // Use fake data store
+            Models.Role rleFromDB = Models.Roles.GetByID(id);
+            // fill from fake data call
+            return new Models.Role(rleFromDB);
         }
         #endregion
 
