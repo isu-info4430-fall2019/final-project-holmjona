@@ -83,6 +83,9 @@ namespace MVCDemo {
             get {
                 return GetAsHexString( _ColorMain);
             }
+            set {
+                _ColorMain = ConvertFromHex(value);
+            }
         }
 
         /// <summary>
@@ -93,6 +96,9 @@ namespace MVCDemo {
             get {
                 return GetAsHexString( _ColorSecondary);
             }
+            set {
+                _ColorSecondary = ConvertFromHex(value);
+            }
         }
 
         /// <summary>
@@ -102,6 +108,22 @@ namespace MVCDemo {
         public string ColorTertiaryAsHexString {
             get {
                 return GetAsHexString( _ColorTertiary);
+            }
+            set {
+                _ColorTertiary = ConvertFromHex(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ColorTertiary for this ChangeMeOut.Costume object.
+        /// </summary>
+        /// <remarks></remarks>
+        public string ColorsString {
+            get {
+                return String.Format("{0}|{1}|{2}", 
+                    GetAsHexString(_ColorMain),
+                    GetAsHexString(_ColorSecondary),
+                    GetAsHexString(_ColorTertiary));
             }
         }
 
@@ -178,11 +200,33 @@ namespace MVCDemo {
         #endregion
 
         #region Private Functions
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        /// <remarks>https://stackoverflow.com/questions/1139957/convert-integer-to-hexadecimal-and-back-again</remarks>
         private string GetAsHexString(int i) {
 
             return i.ToString("X").PadLeft(6,'0');
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        /// <remarks>https://stackoverflow.com/questions/1139957/convert-integer-to-hexadecimal-and-back-again</remarks>
+        public static int ConvertFromHex(string s) {
+            int retVal = 0;
+            try {
+                retVal = int.Parse(s, System.Globalization.NumberStyles.HexNumber);
+            }catch(Exception ex) {
+                retVal = 324567;
+            }
+            return retVal;
+        }
+
         #endregion
 
         public override string ToString() {

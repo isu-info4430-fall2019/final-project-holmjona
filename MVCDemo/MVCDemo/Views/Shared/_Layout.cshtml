@@ -57,14 +57,14 @@
         </nav>
     </header>
     @*@Html.Partial("../Shared/Login")*@
-<div id="messages">
-    @if (TempData["SuccessMessage"] != null) {
-        <div class="badge-success success">@TempData["SuccessMessage"]</div>
-    }
-    @if (TempData["ErrorMessage"] != null) {
-        <div class="alert-warning error">@TempData["ErrorMessage"]</div>
-    }
-</div>
+    <div id="messages">
+        @if (TempData["SuccessMessage"] != null) {
+            <div class="badge-success success">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null) {
+            <div class="alert-warning error">@TempData["ErrorMessage"]</div>
+        }
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -80,5 +80,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    @RenderSection("MoreScripts", required: false)
 </body>
 </html>

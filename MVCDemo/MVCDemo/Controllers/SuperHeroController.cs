@@ -10,15 +10,16 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers {
     public class SuperHeroController : Controller {
-        
 
-        public SuperHeroController(){//DELETEMEContext context) {
+
+        public SuperHeroController() {//DELETEMEContext context) {
             //
         }
 
         // GET: SuperHero
         public async Task<IActionResult> Index(int? page, int? count) {
-            List<SuperHero> sups = DAL.SuperHeroesGet();
+            //List<SuperHero> sups = DAL.SuperHeroesGet();
+            List<SuperHero> sups = SuperDAL.GetSuperHeroes();
             Pager pg = new Pager(page, count, sups.Count);
             ViewBag.Pager = pg;
             return View(sups.Skip(pg.Start).Take(pg.CountPerPage));
@@ -40,7 +41,8 @@ namespace MVCDemo.Controllers {
 
             //var superHero= SuperDAL.GetSuperHero
             //    .FirstOrDefaultAsync(m => m.ID == id);
-            SuperHero superHero = DAL.SuperHeroesGet((int)id);
+            //SuperHero superHero = DAL.SuperHeroesGet((int)id);
+            SuperHero superHero = SuperDAL.GetSuperHero((int)id);
             if (superHero == null) {
                 return NotFound();
             }
@@ -70,10 +72,31 @@ namespace MVCDemo.Controllers {
 
             //ActionResult;
             //Json();
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString");
+            ViewData["EyeColor"] = GetEnumSelectList(typeof(Person.Color));
 
 
             return View();
         }
+
+        //private SelectList GetEnumSelectList(Type type) {
+        //    Array values = Enum.GetValues(type);
+        //    List<SelectListItem> sList = new List<SelectListItem>();
+        //    foreach (var val in values) {
+        //        sList.Add(new SelectListItem(Enum.GetName(type,val), ((int)val).ToString()));
+        //    }
+        //    return new SelectList(sList);
+        //}
+
+        private SelectList GetEnumSelectList(Type type) {
+            List<object> lst = new List<object>();
+            foreach (var val in Enum.GetValues(type)) {
+                object li = new { Text = Enum.GetName(type, val), Value = ((int)val).ToString() };
+                lst.Add(li);
+            }
+            return new SelectList(lst, "Value", "Text");
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create(SuperHero sup) {
@@ -91,9 +114,11 @@ namespace MVCDemo.Controllers {
             if (ModelState.IsValid) {
                 //superHero);
                 //
-                SuperDAL.AddSuperHero(superHero);
+                //     SuperDAL.AddSuperHero(superHero);
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", superHero.CostumeID);
+            ViewData["EyeColor"] = GetEnumSelectList(typeof(Person.Color));
             return View(superHero);
         }
 
@@ -104,10 +129,14 @@ namespace MVCDemo.Controllers {
             }
 
             //SuperHero superHero= SuperDAL.GetSuperHero((int)id);
-            SuperHero sup = DAL.SuperHeroesGet((int)id);
+            //SuperHero sup = DAL.SuperHeroesGet((int)id);
+            SuperHero sup = SuperDAL.GetSuperHero((int)id);
             if (sup == null) {
                 return NotFound();
             }
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", sup.CostumeID);
+            ViewData["EyeColor"] = GetEnumSelectList(typeof(Person.Color));
+
             return View(sup);
         }
 
@@ -124,12 +153,14 @@ namespace MVCDemo.Controllers {
             if (ModelState.IsValid) {
                 try {
                     superHero.dbUpdate();
-                    
+
                 } catch (DbUpdateConcurrencyException) {
-                   
+
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", superHero.CostumeID);
+            ViewData["EyeColor"] = GetEnumSelectList(typeof(Person.Color));
             return View(superHero);
         }
 
@@ -139,7 +170,7 @@ namespace MVCDemo.Controllers {
                 return NotFound();
             }
 
-            var superHero= SuperDAL.GetSuperHero((int)id);
+            var superHero = SuperDAL.GetSuperHero((int)id);
             if (superHero == null) {
                 return NotFound();
             }
@@ -151,9 +182,9 @@ namespace MVCDemo.Controllers {
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {
-            var superHero= SuperDAL.GetSuperHero((int)id);
+            var superHero = SuperDAL.GetSuperHero((int)id);
             superHero.dbRemove();
-            
+
             return RedirectToAction(nameof(Index));
         }
 

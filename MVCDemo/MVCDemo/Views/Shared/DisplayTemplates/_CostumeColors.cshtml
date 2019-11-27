@@ -1,0 +1,7 @@
+﻿@model Costume
+
+@if (Model != null) {
+    <img src="Costume/ImageFor/?colors=@Model.ColorsString&height=100&width=100" />
+} else {
+    <img src="Costume/ImageFor/?colors=AAAAAA|AAAAAA|AAAAAA&height=100&width=100" />
+}

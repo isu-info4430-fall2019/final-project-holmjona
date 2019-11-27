@@ -1,0 +1,38 @@
+﻿<script>
+        var sList = $("#CostumeID");
+        sList.hide();
+        var sItems = sList.children("option");
+        var newHolder = $("<div id='divColorList'>").insertAfter(sList);
+        var selOption = $("<div class='selected'>");
+        selOption.append(getItem("AAAAAA|888888|333333", "Pick an color set", -1));
+        var lstOption = $("<div class='optionList'>");
+        newHolder.append(selOption, lstOption);
+        newHolder.mouseenter(function () {
+            lstOption.show();
+        });
+        newHolder.mouseleave(function () {
+            lstOption.hide();
+        });
+
+        $.each(sItems, function (ndx, obj) {
+            var liDiv = getItem(obj.innerText, obj.innerText, ndx);
+            lstOption.append(liDiv);
+            liDiv.click(function () {
+                var ckObj = $(this);
+                ckObj.siblings().removeClass("selected");
+                selOption.empty().append(ckObj.clone());
+                var indx = ckObj.data("index");
+                sItems.eq(indx).prop("selected", true);
+                ckObj.addClass("selected");
+                newHolder.mouseleave();
+            });
+        });
+        function getItem(colors, text, idx) {
+            var newDiv = $("<div>").data("index", idx);
+            var img = $("<img>").attr("src", "../Costume/ImageFor?colors=" +
+                colors + "&height=25&width=25");
+            img.appendTo(newDiv);
+            newDiv.append($("<span>").text(text));
+            return newDiv;
+        }
+</script>

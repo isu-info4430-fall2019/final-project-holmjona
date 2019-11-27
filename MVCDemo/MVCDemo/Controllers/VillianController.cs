@@ -46,7 +46,7 @@ namespace MVCDemo.Controllers
         // GET: Villian/Create
         public IActionResult Create()
         {
-            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID");
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString");
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace MVCDemo.Controllers
                 villian.dbAdd();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", villian.CostumeID);
             return View(villian);
         }
 
@@ -79,7 +79,7 @@ namespace MVCDemo.Controllers
             {
                 return NotFound();
             }
-            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", villian.CostumeID);
             return View(villian);
         }
 
@@ -107,7 +107,7 @@ namespace MVCDemo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ID", villian.CostumeID);
+            ViewData["CostumeID"] = new SelectList(SuperDAL.GetCostumes(), "ID", "ColorsString", villian.CostumeID);
             return View(villian);
         }
 

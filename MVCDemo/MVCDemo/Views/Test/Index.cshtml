@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "TestArea";
+}
+
+<h1>TestArea</h1>
+
+<div class="form-group">
+    <label class="control-label" for="CostumeID">CostumeID</label>
+    <select class="form-control" data-val="true" data-val-required="The CostumeID field is required." id="CostumeID" name="CostumeID">
+        <option value="1">0000FF|FF0000|FFFF00</option>
+        <option value="2">000000|051EB7|AAAAAA</option>
+        <option value="3">FF0000|FF0000|FFFF00</option>
+        <option value="4">FF0000|0000FF|FFFF00</option>
+    </select>
+
+    <span class="text-danger field-validation-valid" data-valmsg-for="CostumeID" data-valmsg-replace="true"></span>
+
+</div>
+<style>
+    #divColorList {
+        border: 1px solid #000;
+    }
+
+        #divColorList .selected {
+            background-color: #EEE;
+        }
+
+        #divColorList .optionList {
+            border: 1px solid #666;
+            display: none;
+        }
+
+            #divColorList .optionList div {
+                padding: .2em;
+            }
+
+                #divColorList .optionList div:hover {
+                    cursor: pointer;
+                    background-color: #DDD;
+                }
+</style>
+@section Scripts{
+    <script>
+        var sList = $("#CostumeID");
+        sList.hide();
+        var sItems = sList.children("option");
+        var newHolder = $("<div id='divColorList'>").insertAfter(sList);
+        var selOption = $("<div class='selected'>");
+        selOption.append(getItem("AAAAAA|AAAAAA|AAAAAA", "Pick an color set", -1));
+        var lstOption = $("<div class='optionList'>");
+        newHolder.append(selOption, lstOption);
+        newHolder.mouseenter(function () {
+            lstOption.show();
+        });
+        newHolder.mouseleave(function () {
+            lstOption.hide();
+        });
+
+        $.each(sItems, function (ndx, obj) {
+            var liDiv = getItem(obj.innerText, obj.innerText, ndx);
+            lstOption.append(liDiv);
+            liDiv.click(function () {
+                var ckObj = $(this);
+                ckObj.siblings().removeClass("selected");
+                selOption.empty().append(ckObj.clone());
+                var indx = ckObj.data("index");
+                sItems.eq(indx).prop("selected", true);
+                ckObj.addClass("selected");
+                newHolder.mouseleave();
+            });
+        });
+        function getItem(colors, text, idx) {
+            var newDiv = $("<div>").data("index", idx);
+            var img = $("<img>").attr("src", "../Costume/ImageFor?colors=" +
+                colors + "&height=25&width=25");
+            img.appendTo(newDiv);
+            newDiv.append($("<span>").text(text));
+            return newDiv;
+        }
+    </script>
+}
