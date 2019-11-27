@@ -20,9 +20,11 @@ namespace MVCDemo.Controllers
         }
 
         // GET: Villian
-        public IActionResult Index()
-        {
-            return View(SuperDAL.GetVillians());
+        public IActionResult Index(int? page, int? count) {
+            List<Villian> vills = SuperDAL.GetVillians();
+            Pager pg = new Pager(page, count, vills.Count);
+            ViewBag.Pager = pg;
+            return View(vills.Skip(pg.Start).Take(pg.CountPerPage));
         }
 
         // GET: Villian/Details/5

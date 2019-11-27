@@ -20,9 +20,12 @@ namespace MVCDemo.Controllers
         }
 
         // GET: City
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, int? count)
         {
-            return View(SuperDAL.GetCities());
+            List<City> cits = SuperDAL.GetCities();
+            Pager pg = new Pager(page, count, cits.Count);
+            ViewBag.Pager = pg;
+            return View(cits.Skip(pg.Start).Take(pg.CountPerPage));
         }
 
         // GET: City/Details/5

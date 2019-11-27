@@ -17,12 +17,15 @@ namespace MVCDemo.Controllers {
         }
 
         // GET: SuperHero
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index(int? page, int? count) {
             List<SuperHero> sups = DAL.SuperHeroesGet();
+            Pager pg = new Pager(page, count, sups.Count);
+            ViewBag.Pager = pg;
+            return View(sups.Skip(pg.Start).Take(pg.CountPerPage));
             //foreach (SuperHero sup in sups) {
             //    List<SuperPet> pets = sup.SuperPets;
             //}
-            return View(sups);
+            //return View(sups);
         }
 
         // GET: SuperHero/Details/5

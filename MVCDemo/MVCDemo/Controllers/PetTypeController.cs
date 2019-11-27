@@ -20,9 +20,11 @@ namespace MVCDemo.Controllers
         }
 
         // GET: PetType
-        public async Task<IActionResult> Index()
-        {
-            return View(SuperDAL.GetPetTypes());
+        public async Task<IActionResult> Index(int? page, int? count) {
+            List<PetType> lst = SuperDAL.GetPetTypes();
+            Pager pg = new Pager(page, count, lst.Count);
+            ViewBag.Pager = pg;
+            return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
         }
 
         // GET: PetType/Details/5

@@ -15,6 +15,10 @@ namespace MVCDemo.Models {
         public int CountPerPage;
         
         public Pager(int? page, int? count, int totalCount) {
+            // default to first page and 3 items per page.
+            if (page == null) page = 1;
+            if (count == null) count = 3;
+
             CountPerPage = (int)count;
             Start = ((int)page - 1) * CountPerPage;
             CurrentPageNumber = (int)page;    

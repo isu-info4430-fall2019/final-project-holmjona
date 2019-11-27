@@ -44,4 +44,6 @@
         @Html.Partial("Parts/_TableData")
     </tbody>
 </table>
-@Html.Partial("Pagination", (Pager)ViewBag.Pager)
+@*@Html.Partial("Pagination", (Pager)ViewBag.Pager)*@
+<partial name="Pagination" model="ViewBag.Pager" />
+

@@ -20,9 +20,11 @@ namespace MVCDemo.Controllers
         }
 
         // GET: Costume
-        public async Task<IActionResult> Index()
-        {
-            return View(SuperDAL.GetCostumes());
+        public async Task<IActionResult> Index(int? page, int? count) {
+            List<Costume> lst = SuperDAL.GetCostumes();
+            Pager pg = new Pager(page, count, lst.Count);
+            ViewBag.Pager = pg;
+            return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
         }
 
         // GET: Costume/Details/5
