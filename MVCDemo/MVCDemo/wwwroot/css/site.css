@@ -91,3 +91,51 @@ body {
                 cursor: pointer;
                 background-color: #DDD;
             }
+
+#loginForm {
+    border: solid 1px #333;
+    border-radius: 0 0 .3em .3em;
+    background-color: #d7e7f7;
+    position: relative;
+    padding: .3em;
+    font-weight: bold;
+    color: #1b6ec2;
+}
+    #loginForm h3 {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #1b6ec2;
+    }
+
+    #loginForm div.form {
+        border: solid 1px #333;
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        padding: 1em;
+        background-color: #d7e7f7;
+        box-shadow: #333 5px 5px 10px;
+        border-radius: 0 0 .8em .8em;
+        display: none;
+    }
+    #loginForm div.form label {
+        font-weight: bold;
+    }
+    #loginForm div.form ul {
+        list-style: none;
+        padding: 1em;
+    }
+    #loginForm input{
+        border-radius: .3em;
+    }
+    #loginForm input[type=submit] {
+        background-color: #1b6ec2;
+        color: #FFF;
+    }
+        #loginForm input[type=submit]:hover {
+            background-color: #114880;
+            color: #d7e7f7;
+        }

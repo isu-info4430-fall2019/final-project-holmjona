@@ -1439,13 +1439,15 @@ namespace MVCDemo {
             Models.User usrFromDB =  Models.Users.GetByUserName(uName);
             // fill from fake data call
             Models.User usr = new Models.User(usrFromDB);
-            if (usr != null) {
+            if (usr != null && usr.Salt != null) {
                 if (usr.Password == Models.Hasher.HashIt(pWord,usr.Salt)) {
                     // password match
                 } else {
                     // no match
                     usr = null;
                 }
+            } else {
+                usr = null;
             }
             return usr;
         }

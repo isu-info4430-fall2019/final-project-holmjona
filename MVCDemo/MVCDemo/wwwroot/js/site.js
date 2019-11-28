@@ -47,3 +47,38 @@ $("#btnFilter").click(function() {
     }
     return false;
 });
+
+$("#loginForm").mouseenter(function () {
+    var frm = $(this).find(".form");
+    frm.show(200);
+    fillUserName();
+});
+$("#loginForm").mouseleave(function () {
+    var frm = $(this).find(".form");
+    frm.hide(200);
+});
+
+$("#loginForm form").submit(function () {
+    setUserName();
+    //return false;
+});
+
+function fillUserName() {
+    if (localStorage) {
+        if (typeof localStorage.username !== "undefined") {
+            $("#txtUserName").val(localStorage.username);
+            $("#chkRememberMe").prop("checked",true);
+        }
+    }
+}
+
+function setUserName() {
+    if (localStorage) {
+        var chk = $("#chkRememberMe");
+        if (chk.is(":checked")) {
+            localStorage.username = $("#txtUserName").val();
+        } else {
+            localStorage.removeItem("username");
+        }
+    }
+}

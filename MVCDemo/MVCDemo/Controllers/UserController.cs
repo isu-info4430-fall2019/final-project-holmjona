@@ -24,10 +24,12 @@ namespace MVCDemo.Controllers
             if (usr != null) {
                 // success
                 Response.Cookies.Append("user", SuperDAL.GetCookie(usr));
+                TempData["SuccessMessage"] = "Successful Login";
             } else {
                 // failed
+                TempData["ErrorMessage"] = "Login Failed";
             }
-             return  RedirectToAction("Index", "Home");
+            return  RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout() {
