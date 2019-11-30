@@ -57,7 +57,7 @@ namespace MVCDemo.Controllers {
                 // ViewBag and ViewData will only pass down to a View returned
                 // by this action. 
                 return RedirectToAction("Index", "Home");
-            } else if (cUser.Role.SuperHeroAdd) {
+            } else if (cUser.Role.SuperPetAdd) {
                 ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
                 ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
                 return View();

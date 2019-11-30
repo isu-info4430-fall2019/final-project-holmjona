@@ -27,6 +27,7 @@ namespace MVCDemo.Models {
                 while (dr.Read()) {
                     SuperHero sup = new SuperHero();
                     sup.ID  = (int)dr["SuperHeroID"];
+                    //sup.ID = dr.GetInt32(0);
                     sup.FirstName  = dr["FirstName"].ToString();
                     sup.LastName  = (string)dr["LastName"];
                     sup.BirthDate  = (DateTime)dr["DateOfBirth"];

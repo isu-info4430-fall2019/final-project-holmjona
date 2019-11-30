@@ -32,7 +32,7 @@ namespace MVCDemo.Models {
                 SuperPetAdd = true, SuperPetEdit = true, SuperPetDelete = true
             });
             _List.Add(new Role() {
-                ID = 3, Name = "Power User",
+                ID = 4, Name = "Power User",
                 SuperHeroAdd = true, SuperHeroEdit = true, SuperHeroDelete = false,
                 SuperPetAdd = true, SuperPetEdit = true, SuperPetDelete = false
             });

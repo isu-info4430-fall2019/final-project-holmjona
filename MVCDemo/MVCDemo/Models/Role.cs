@@ -17,6 +17,10 @@ namespace MVCDemo.Models {
             if (rleToClone != null) Fill(rleToClone);
         }
 
+        public Role(SqlDataReader dr) {
+            Fill(dr);
+        }
+
         public bool SuperHeroAdd {
             get { return _SuperHeroAdd; }
             set { _SuperHeroAdd = value; }
@@ -58,7 +62,14 @@ namespace MVCDemo.Models {
         }
 
         public override void Fill(SqlDataReader dr) {
-            throw new NotImplementedException();
+            this.ID = (int)dr["ID"];
+            this.Name = (string)dr["Name"];
+            this.SuperHeroAdd = (bool)dr["SuperHeroAdd"];
+            this.SuperHeroEdit = (bool)dr["SuperHeroEdit"];
+            this.SuperHeroDelete = (bool)dr["SuperHeroDelete"];
+            this.SuperPetAdd = (bool)dr["SuperPetAdd"];
+            this.SuperPetEdit = (bool)dr["SuperPetEdit"];
+            this.SuperPetDelete = (bool)dr["SuperPetDelete"];
         }
 
         public void Fill(Role otherRole) {

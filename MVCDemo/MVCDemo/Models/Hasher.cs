@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace MVCDemo.Models {
     public static class Hasher {
+        //static String pepper = "BsbKf8prL7V2OtM8NcjcMg==";
         //https://monkelite.com/how-to-hash-password-in-asp-net-core/
         public static string HashIt(string pass, string salt) {
-           byte[] hash = KeyDerivation.Pbkdf2(pass, Encoding.UTF8.GetBytes(salt),
+           byte[] hash = KeyDerivation.Pbkdf2(pass, Encoding.UTF8.GetBytes(salt),// + pepper),
                 KeyDerivationPrf.HMACSHA256, 1000, 256 / 8);
             return Convert.ToBase64String(hash);
         }

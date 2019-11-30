@@ -1362,9 +1362,6 @@ namespace MVCDemo {
             return retList;
         }
 
-
-
-
         /// <summary>
         /// Attempts to add a database entry corresponding to the given SuperPet
         /// </summary>
