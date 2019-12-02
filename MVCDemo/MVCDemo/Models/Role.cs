@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace MVCDemo.Models {
     public class Role : DatabaseNamedRecord {
@@ -13,7 +14,11 @@ namespace MVCDemo.Models {
         private bool _SuperPetEdit = false;
         private bool _SuperPetDelete = false;
 
-        public Role(Role rleToClone = null) {
+        [JsonConstructor]
+        public Role() {
+        }
+
+            public Role(Role rleToClone = null) {
             if (rleToClone != null) Fill(rleToClone);
         }
 

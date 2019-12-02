@@ -32,6 +32,7 @@ namespace MVCDemo {
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddLiveReload();
+            services.AddSession();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMvc().AddRazorRuntimeCompilation();
 
@@ -51,6 +52,7 @@ namespace MVCDemo {
                 app.UseHsts();
             }
 
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

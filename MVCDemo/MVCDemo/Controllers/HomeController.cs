@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCDemo.Models;
@@ -31,6 +32,11 @@ namespace MVCDemo.Controllers {
                 new Tuple<string,string>(Hasher.HashIt("tester",salts[4]),salts[4]),
                 new Tuple<string,string>(Hasher.HashIt("tester",salts[5]),salts[5])
             };
+            //if (HttpContext.Session.Keys.Contains("user")) {
+            //    Response.WriteAsync(HttpContext.Session.GetString("user"));
+            //}
+            Models.User usr = SessionHelper.Get<User>(HttpContext.Session, "user");
+            if (usr != null) Response.WriteAsync(usr.UserName);
             return View();
         }
 
