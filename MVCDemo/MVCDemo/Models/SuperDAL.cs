@@ -1437,7 +1437,7 @@ namespace MVCDemo {
             // fill from fake data call
             Models.User usr = new Models.User(usrFromDB);
             if (usr != null && usr.Salt != null) {
-                if (usr.Password == Models.Hasher.HashIt(pWord,usr.Salt)) {
+                if (usr.Password == Models.Hasher.HashIt(pWord,"a")) {
                     // password match
                 } else {
                     // no match

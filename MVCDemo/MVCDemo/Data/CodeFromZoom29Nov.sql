@@ -43,7 +43,15 @@ INSERT INTO Roles
 	,(4, 'Power User',1,1,0,1,1,0)
 	
 SET INSERT_IDENTITY OFF
-	
-	INSERT INTO USErs(Name,ROleID,Salt,Password)
+
+CREATE TABLE Users(
+	UserID int IDENTITY(1,1) PRIMARY KEY
+	,UserName nvarchar(50) NOT NULL
+	,RoleID nvarchar(50) NOT NULL
+	,Salt nvarchar(50) NOT NULL
+	,Password nvarchar(50) NOT NULL
+)
+
+INSERT INTO Users(UserName,ROleID,Salt,Password)
 	VALUES ("bob",3,'NU7OqacPNlFCzwfgytskAg==','HbfdqFOoL2qXmOs2QVcC0DwyAHk4GAGzzWlhR/BilPo=')
 	,("Smidt",2)

@@ -28,10 +28,15 @@ namespace MVCDemo.Controllers
                 Response.Cookies.Append("user", SuperDAL.GetCookie(usr));
                 //HttpContext.Session.SetString("user",JsonConvert.SerializeObject(usr));
                 SessionHelper.Set(HttpContext.Session, "user", usr);
-                TempData["SuccessMessage"] = "Successful Login";
+                TempData["SuccessMessage"] = "Successful Login (TempData)"; 
+                ViewData["SuccessMessage"] = "Successful Login (ViewData)"; 
+                ViewBag.SuccessMessage = "Successful Login (ViewBag)";
+
             } else {
                 // failed
-                TempData["ErrorMessage"] = "Login Failed";
+                TempData["ErrorMessage"] = "Login Failed (TempData)";
+                ViewData["ErrorMessage"] = "Login Failed (ViewData)";
+                ViewBag.ErrorMessage = "Login Failed (ViewBag)";
             }
             return  RedirectToAction("Index", "Home");
         }

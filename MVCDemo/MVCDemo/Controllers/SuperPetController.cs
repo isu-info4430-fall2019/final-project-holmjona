@@ -79,8 +79,16 @@ namespace MVCDemo.Controllers {
                 //
                 //SuperDAL.AddSuperPet(superPet);
                 superPet.dbAdd();
-                return RedirectToAction(nameof(Index));
-            }
+                if (false) {
+                    //
+                    ViewData["ErrorMessage"] = "Ooops";
+                    ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
+                    ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
+                    return View(superPet);
+                } else {
+                    return RedirectToAction(nameof(Index));
+                }
+                }
             ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
             ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View(superPet);

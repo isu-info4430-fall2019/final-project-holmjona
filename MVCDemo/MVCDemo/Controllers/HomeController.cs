@@ -21,8 +21,10 @@ namespace MVCDemo.Controllers {
         public IActionResult Index() {
             List<string> salts = new List<string>();
             for (int i = 0; i < 6; i++) {
-                salts.Add(Hasher.GenerateSalt());
+                salts.Add("a");//Hasher.GenerateSalt());
             }
+
+           //throw new Exception();
 
             ViewBag.Hash = new List<Tuple<string, string>>() {
                 new Tuple<string,string>(Hasher.HashIt("tester",salts[0]),salts[0]),

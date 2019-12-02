@@ -13,6 +13,7 @@ $("#filterText").keyup(function(e) {
         , data: { searchtext: text }
         , success: function(rdata) {
             var lst = $("<ul>");
+            //var lst = document.createElement("ul");
             $.each(rdata.data, function(ndx, obj) {
                 var li = $("<li>").text(obj.text + " - " + obj.id)
                     .data("id", obj.id).data("text", obj.text);
