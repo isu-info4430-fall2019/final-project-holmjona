@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SuperPet>
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+<ul style="border: 2px solid #F00; width: 40%; float:left;">
+    @foreach (SuperPet pet in Model) {
+        <li>@pet.Name
+        <button data-id="@pet.ID" class="addToCart">Add To Cart</button>
+    </li>
+    }
+</ul>
+
+<ul id="cart" style="border: 2px solid #0A0; width: 40%; float:left;">
+    @foreach (SuperPet petInCart in ViewBag.InCart) {
+        <li>@petInCart.Name</li>
+}
+
+</ul>

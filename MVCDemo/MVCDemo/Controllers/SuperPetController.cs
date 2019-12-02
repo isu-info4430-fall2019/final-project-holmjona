@@ -175,6 +175,24 @@ namespace MVCDemo.Controllers {
         //    return SuperPet.Any(e => e.ID == id);
         //}
 
+            public IActionResult Cart() {
+            ViewBag.InCart = GetPetsInCart(Request.Cookies["cartIds"] );
+            return View(SuperDAL.GetSuperPets());
+        }
+
+        private List<SuperPet> GetPetsInCart(string idString) {
+            List<SuperPet> retList = new List<SuperPet>();
+            if (!string.IsNullOrEmpty(idString)) {
+                string[] ids = idString.Split(",");
+                foreach (string idSt in ids) {
+                    SuperPet sp = SuperDAL.GetSuperPet(idSt, false);
+                    if (sp != null)
+                        retList.Add(sp);
+                }
+            }
+            return retList;
+        }
+
 
         #region AJAX calls
 
@@ -209,6 +227,28 @@ namespace MVCDemo.Controllers {
 
             }
             return NotFound();
+        }
+
+        public ActionResult AddToCart(int? petId) {
+            string cook = Request.Cookies["cartIds"];
+            cook = cook == null ? "" : cook;
+            cook += "," + petId;
+            Response.Cookies.Append("cartIds", cook);
+            return Json(new{success = true});
+        }
+
+
+        public ActionResult GetCart() {
+            List<SuperPet> inCart = new List<SuperPet>();
+            inCart = GetPetsInCart(Request.Cookies["cartIds"]);
+            List<object> retList = new List<object>();
+            foreach (SuperPet petInCart in inCart) {
+                retList.Add(new {
+                    text = petInCart.Name,
+                    id = petInCart.ID
+                });
+            }
+            return Json(retList);
         }
 
         #endregion

@@ -83,3 +83,42 @@ function setUserName() {
         }
     }
 }
+
+$(".addToCart").click(function () {
+    //var par = $(this).parent();
+    //$("#cart").append(par);
+    var id = $(this).data("id");
+    $.ajax({
+        url: "SuperPet/AddToCart"
+        , data: { petId: id }
+        , success: function (data) {
+            if (data.success) {
+               // alert("Added");
+                updateCart();
+            } else {
+                alert("Something went wrong.");
+            }
+        }
+        , error: function() {
+            alert("ooops");
+        }
+    });
+});
+
+function updateCart() {
+    $("#cart").empty();
+    $.ajax({
+        url: "SuperPet/GetCart"
+        , success: function (data) {
+            //alert(data);
+            $.each(data, function (ndx,petO) {
+                var li = $("<li>").text(petO.text);
+                $("#cart").append(li);
+            });
+        }
+        , error: function () {
+            alert("ooops");
+
+        }
+    });
+}
