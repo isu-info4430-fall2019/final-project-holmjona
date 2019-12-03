@@ -65,7 +65,7 @@ namespace MVCDemo {
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=SuperPet}/{action=Cart}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
             app.UseLiveReload();

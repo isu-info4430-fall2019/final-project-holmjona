@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Configuration;
-
+using MVCDemo.Models;
 
 namespace MVCDemo {
     public static class SuperDAL {
@@ -30,6 +30,9 @@ namespace MVCDemo {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
             } catch (Exception ex) { }
         }
+
+        
+
         /// <summary>
         /// Sets Connection and Executes a command to read data from the database
         /// </summary>
@@ -1437,7 +1440,7 @@ namespace MVCDemo {
             // fill from fake data call
             Models.User usr = new Models.User(usrFromDB);
             if (usr != null && usr.Salt != null) {
-                if (usr.Password == Models.Hasher.HashIt(pWord,"a")) {
+                if (usr.Password == Models.Hasher.HashIt(pWord,usrFromDB.Salt)) {
                     // password match
                 } else {
                     // no match
@@ -1485,6 +1488,26 @@ namespace MVCDemo {
             // fill from fake data call
             return new Models.Role(rleFromDB);
         }
+
+        internal static void AddRole(Role role) {
+            // Fake DAL do not do it this way in real life!!
+            int maxID = Roles.List.Max(r => r.ID);
+            role.ID = maxID + 1;
+            Roles.List.Add(role);
+        }
+
+        internal static void UpdateRole(Role role) {
+            Role rleToUpdate = Roles.GetByID(role.ID);
+            rleToUpdate.Name = role.Name;
+            rleToUpdate.SuperPetAdd = role.SuperPetAdd;
+            rleToUpdate.SuperPetEdit = role.SuperPetEdit;
+            rleToUpdate.SuperPetDelete = role.SuperPetDelete;
+            rleToUpdate.SuperHeroAdd = role.SuperHeroAdd;
+            rleToUpdate.SuperHeroEdit = role.SuperHeroEdit;
+            rleToUpdate.SuperHeroDelete = role.SuperHeroDelete;
+        }
+
+
         #endregion
 
     }

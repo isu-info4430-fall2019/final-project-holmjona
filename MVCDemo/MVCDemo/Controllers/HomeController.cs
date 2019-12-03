@@ -38,7 +38,7 @@ namespace MVCDemo.Controllers {
             //    Response.WriteAsync(HttpContext.Session.GetString("user"));
             //}
             Models.User usr = SessionHelper.Get<User>(HttpContext.Session, "user");
-            if (usr != null) Response.WriteAsync(usr.UserName);
+           // if (usr != null) Response.WriteAsync(usr.UserName);
             return View();
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MVCDemo;
+using MVCDemo.Models;
 
 namespace MVCDemo.Models
 {
@@ -27,5 +28,7 @@ namespace MVCDemo.Models
         public DbSet<MVCDemo.PetType> PetType { get; set; }
 
         public DbSet<MVCDemo.Villian> Villian { get; set; }
+
+        public DbSet<MVCDemo.Models.Role> Role { get; set; }
     }
 }
