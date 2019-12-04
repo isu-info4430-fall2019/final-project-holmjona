@@ -89,7 +89,7 @@ $(".addToCart").click(function () {
     //$("#cart").append(par);
     var id = $(this).data("id");
     $.ajax({
-        url: "SuperPet/AddToCart"
+        url: "AddToCart"
         , data: { petId: id }
         , success: function (data) {
             if (data.success) {
@@ -108,7 +108,7 @@ $(".addToCart").click(function () {
 function updateCart() {
     $("#cart").empty();
     $.ajax({
-        url: "SuperPet/GetCart"
+        url: "GetCart"
         , success: function (data) {
             //alert(data);
             $.each(data, function (ndx,petO) {

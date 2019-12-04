@@ -25,7 +25,7 @@ namespace MVCDemo.Controllers {
             //    sPut.SuperHero = SuperDAL.GetSuperHero(sPut.SuperHeroID);
             //}
             if (page != null && count != null) {
-                Pager pg = new Pager(page,count,lst.Count);
+                Pager pg = new Pager(page, count, lst.Count);
                 ViewBag.Pager = pg;
                 return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
             } else {
@@ -53,7 +53,7 @@ namespace MVCDemo.Controllers {
             if (cUser == null) {
                 // see Shared/_Layout for this error message use.
                 // TempData is used to pass data through a Redirect.
-                TempData["ErrorMessage"] ="You need to login to view add a Super Pet.";
+                TempData["ErrorMessage"] = "You need to login to view add a Super Pet.";
                 // ViewBag and ViewData will only pass down to a View returned
                 // by this action. 
                 return RedirectToAction("Index", "Home");
@@ -88,7 +88,7 @@ namespace MVCDemo.Controllers {
                 } else {
                     return RedirectToAction(nameof(Index));
                 }
-                }
+            }
             ViewData["PetTypeID"] = new SelectList(SuperDAL.GetPetTypes(), "ID", "Name");
             ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
             return View(superPet);
@@ -175,8 +175,8 @@ namespace MVCDemo.Controllers {
         //    return SuperPet.Any(e => e.ID == id);
         //}
 
-            public IActionResult Cart() {
-            ViewBag.InCart = GetPetsInCart(Request.Cookies["cartIds"] );
+        public IActionResult Cart() {
+            ViewBag.InCart = GetPetsInCart(Request.Cookies["cartIds"]);
             return View(SuperDAL.GetSuperPets());
         }
 
@@ -225,6 +225,14 @@ namespace MVCDemo.Controllers {
                 List<SuperPet> sups = SuperDAL.GetSuperPets(tempHero);
                 return PartialView("Parts/_TableData", sups);
 
+                //List<SuperPet> answers = new List<SuperPet>();
+                //foreach (SuperPet sup in sups) {
+                //    if (sup.Name.ToUpper().Contains(searchtext.ToUpper())) {
+                //        answers.Add(sup);
+                //    }
+                //}
+                //return PartialView("Parts/_TableData", answers);
+
             }
             return NotFound();
         }
@@ -234,7 +242,12 @@ namespace MVCDemo.Controllers {
             cook = cook == null ? "" : cook;
             cook += "," + petId;
             Response.Cookies.Append("cartIds", cook);
-            return Json(new{success = true});
+            var a = new { success = true, derpy = "rabbits", loopy = 457687 };
+            return Json(a);
+            //SuperPet p = new SuperPet();
+            //p.Name = "Fluffy";
+            //p.ID = 23;
+            //return Json(p);
         }
 
 
