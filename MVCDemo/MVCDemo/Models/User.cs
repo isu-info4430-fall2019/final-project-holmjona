@@ -12,6 +12,9 @@ namespace MVCDemo.Models {
         private int _RoleID;
         private Role _Role;
 
+        public User() {
+        }
+
         public User(User usrToClone = null) {
             if (usrToClone != null) Fill(usrToClone);
         }
@@ -66,11 +69,13 @@ namespace MVCDemo.Models {
 
 
         public override int dbAdd() {
-            throw new NotImplementedException();
+            _ID = SuperDAL.AddUser(this);
+            return ID;
         }
 
         public override int dbUpdate() {
-            throw new NotImplementedException();
+         int answer = SuperDAL.UpdateUser(this);
+            return answer;
         }
 
         public override void Fill(SqlDataReader dr) {

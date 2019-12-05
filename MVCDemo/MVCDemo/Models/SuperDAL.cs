@@ -50,6 +50,14 @@ namespace MVCDemo {
             }
         }
 
+        internal static int UpdateUser(User user) {
+            throw new NotImplementedException();
+        }
+
+        internal static int AddUser(User user) {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Sets Connection and Executes a command to add a new object/ entity to the database.
         /// </summary>

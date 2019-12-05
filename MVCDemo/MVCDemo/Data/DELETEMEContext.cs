@@ -30,5 +30,7 @@ namespace MVCDemo.Models
         public DbSet<MVCDemo.Villian> Villian { get; set; }
 
         public DbSet<MVCDemo.Models.Role> Role { get; set; }
+
+        public DbSet<MVCDemo.Models.User> User { get; set; }
     }
 }

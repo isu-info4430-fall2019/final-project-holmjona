@@ -48,5 +48,21 @@ namespace MVCDemo.Models {
             }
             return found;
         }
+
+        public static int AddUser(User newUser) {
+            newUser.ID = List.Max(u => u.ID) +1;
+            List.Add(newUser);
+            return newUser.ID;
+        }
+
+        public static int UpdateUser(User newUser) {
+            User toUpdate = GetByID(newUser.ID);
+            toUpdate.UserName = newUser.UserName;
+            toUpdate.Password = newUser.Password;
+            toUpdate.Salt = newUser.Salt;
+            toUpdate.RoleID = newUser.RoleID;
+            return 1; // success
+        }
+
     }
 }
