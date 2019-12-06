@@ -17,20 +17,42 @@ namespace MVCDemo.Controllers {
         }
 
         // GET: SuperPet
-        public ActionResult Index(int? page, int? count) {
-            //    ViewBag.PetTypes = SuperDAL.GetPetTypes();
-            List<SuperPet> lst = SuperDAL.GetSuperPets();
-            //foreach (SuperPet sPut  in lst) {
-            //    sPut.PetType = SuperDAL.GetPetType(sPut.PetTypeID);
-            //    sPut.SuperHero = SuperDAL.GetSuperHero(sPut.SuperHeroID);
-            //}
-            if (page != null && count != null) {
-                Pager pg = new Pager(page, count, lst.Count);
-                ViewBag.Pager = pg;
-                return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
-            } else {
-                return View(lst);
+        public ActionResult Index(int? page, int? count, int? id,int?superid,int?pettypeid) {
+            // how to handle associations and associated objects.
+            List<SuperPet> lst;
+            if (id != null) {
+                // get the pets for that superhero
+                SuperHero s = SuperDAL.GetSuperHero((int)id);
+                lst = SuperDAL.GetSuperPets(s);
+            } else if (superid != null) {
+                SuperHero s = SuperDAL.GetSuperHero((int)superid);
+                lst = SuperDAL.GetSuperPets(s);
+            } else if (pettypeid != null) {
+                PetType pt = SuperDAL.GetPetType((int)pettypeid);
+                lst = SuperDAL.GetSuperPets(pt);
+            } else{
+                // get all pets.
+                lst = SuperDAL.GetSuperPets();
             }
+
+            //Smaller cleaner version:
+            Pager pg = new Pager(page, count, lst.Count);
+            ViewBag.Pager = pg;
+            return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
+
+            ////    ViewBag.PetTypes = SuperDAL.GetPetTypes();
+            //List<SuperPet> lst = SuperDAL.GetSuperPets();
+            ////foreach (SuperPet sPut  in lst) {
+            ////    sPut.PetType = SuperDAL.GetPetType(sPut.PetTypeID);
+            ////    sPut.SuperHero = SuperDAL.GetSuperHero(sPut.SuperHeroID);
+            ////}
+            //if (page != null && count != null) {
+            //    Pager pg = new Pager(page, count, lst.Count);
+            //    ViewBag.Pager = pg;
+            //    return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
+            //} else {
+            //    return View(lst);
+            //}
         }
 
         // GET: SuperPet/Details/5

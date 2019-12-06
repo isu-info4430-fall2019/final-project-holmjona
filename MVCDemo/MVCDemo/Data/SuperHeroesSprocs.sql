@@ -1107,6 +1107,26 @@ END
 GO
 --GRANT EXECUTE ON dbo.sprocSuperPetsGetAll TO sprocReadUser
 GO
+
+-- =============================================
+-- Author:		COB\holmjona
+-- Create date:	12 Nov 2019
+-- Description:	Retrieve all SuperPets from the database.
+-- =============================================
+CREATE PROCEDURE dbo.sprocSuperPetsGetForPetType
+@PetTypeID int
+AS
+BEGIN
+     -- SET NOCOUNT ON added to prevent extra result sets from
+     -- interfering with SELECT statements.
+     SET NOCOUNT ON;
+
+     SELECT * FROM SuperPets
+		WHERE PetTypeID = @PetTypeID
+END
+GO
+--GRANT EXECUTE ON dbo.sprocSuperPetsGetForPetType TO sprocReadUser
+GO
 -- =============================================
 -- Author:		COB\holmjona
 -- Create date:	12 Nov 2019

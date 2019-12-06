@@ -21,8 +21,13 @@ namespace MVCDemo.Controllers {
         }
 
         // GET: Costume
-        public async Task<IActionResult> Index(int? page, int? count) {
-            List<Costume> lst = SuperDAL.GetCostumes();
+        public async Task<IActionResult> Index(int? page, int? count,string color) {
+            List<Costume> lst;
+            if (color != null) {
+                 lst = SuperDAL.GetCostumes(color);
+            } else {
+                 lst = SuperDAL.GetCostumes();
+            }
             Pager pg = new Pager(page, count, lst.Count);
             ViewBag.Pager = pg;
             return View(lst.Skip(pg.Start).Take(pg.CountPerPage));
@@ -141,26 +146,21 @@ namespace MVCDemo.Controllers {
             Bitmap bm = new Bitmap((int)width, (int)height);
             Graphics gr = Graphics.FromImage(bm);
             String[] colorArr = colors.Split("|");
+
             if (colorArr.Length != 3) colorArr = new string[] { "0", "0", "0" };
             Costume fkCostume = new Costume() {
                 ColorMainAsHexString = colorArr[0],
                 ColorSecondaryAsHexString = colorArr[1],
                 ColorTertiaryAsHexString = colorArr[2]
             };
+
             DrawCircle(gr, fkCostume.ColorMain, 0, 0, (int)(height * .9), (int)(width * .9));
             DrawCircle(gr, fkCostume.ColorSecondary, (int)(height * .3), (int)(width * .3), (int)(height * .7), (int)(width * .7));
             DrawCircle(gr, fkCostume.ColorTertiary, (int)(height * .5), (int)(width * .1), (int)(height * .5), (int)(width * .5));
 
             MemoryStream ms = new MemoryStream();
             bm.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            //FileStreamResult fr = new FileStreamResult(ms, new MediaTypeHeaderValue("image/png"));
-
-            //ms.Dispose();
-            //gr.Dispose();
-            //bm.Dispose();
-            //return fr;
-            //Response.Headers.Add("Content-Length", ms.Length.ToString());
-            //return new FileStreamResult(ms, "image/png");
+           
             FileContentResult fcr = new FileContentResult(ms.ToArray(),"image/png");
             ms.Dispose();
             gr.Dispose();

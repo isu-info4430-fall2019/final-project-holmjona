@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using MVCDemo;
 using MVCDemo.Models;
 
@@ -188,6 +189,32 @@ namespace MVCDemo.Controllers {
             return RedirectToAction(nameof(Index));
         }
 
+        public ActionResult GetData() {
+            //List<dynamic> lst = new List<dynamic>() {
+            //    new {Name="Kitanna",Color="Pink" },
+            //    new {Name="James"  ,Color="Green"},
+            //    new {Name="Tia"    ,Color="Teal" }
+            //};
+
+            //String retStr = "Person,Color" + System.Environment.NewLine;
+            //foreach (dynamic p in lst) {
+            //    retStr += p.Name+ "," + p.Color + System.Environment.NewLine;
+            //}
+
+
+            String retStr = "";
+            List<SuperHero> lst = SuperDAL.GetSuperHeroes();
+            foreach (SuperHero p in lst) {
+                retStr += $"{p.FirstName},{p.LastName},{p.EyeColor}{System.Environment.NewLine}";
+            }
+            byte[] strAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(retStr);
+            FileContentResult fcr = new FileContentResult(strAsBytes,
+                new MediaTypeHeaderValue("text/csv"));
+            fcr.FileDownloadName = "data.csv";
+            return fcr;
+        }
+
+
         #region AJAX calls
 
         [HttpPost]
@@ -211,6 +238,29 @@ namespace MVCDemo.Controllers {
                 data = answers
             };
             return Json(answer);
+        }
+
+
+        // get SuperHeroes by costume color
+        public ActionResult ByColor(string color) {
+            List<SuperHero> lst = SuperDAL.GetSuperHeroes(color);
+            List<object> retList = new List<object>();
+            foreach (SuperHero super in lst) {
+                object nS = new {
+                    Name = super.FullName,
+                    ID = super.ID,
+                    CostumeID = super.CostumeID
+                };
+                retList.Add(nS);
+            }
+
+            return Json(retList);
+        }
+
+        public ActionResult ListByColor(string color) {
+            List<SuperHero> lst = SuperDAL.GetSuperHeroes(color);
+
+            return PartialView("Parts/_List",lst);
         }
 
         #endregion

@@ -25,6 +25,11 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
+                    @{ Dictionary<string,string> paras = new Dictionary<string, string>(){
+                                {"pettypeid",item.ID.ToString()}
+                        };
+                        }
+                    <a asp-action="Index" asp-controller="SuperPet" asp-all-route-data="@paras" >Pets</a> |
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>

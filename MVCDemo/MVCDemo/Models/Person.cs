@@ -19,11 +19,13 @@ namespace MVCDemo {
 
         public enum Color {
             Brown,
-            Blue,
+            Blue=35,
             Green,
             Hazel = 99,
             Gray= 56,
-            Aqua
+            Aqua, 
+            Red,
+            Violet
         }
 
         public enum Action {

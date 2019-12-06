@@ -122,3 +122,20 @@ function updateCart() {
         }
     });
 }
+
+$("#btnSearch").click(function () {
+    var clr = $("#txtSearch").val();
+
+    $.ajax(
+        { // settings
+            url: "SuperHero/ListByColor",
+            data: {color:clr},
+            success: function (rsp) {
+                $("table tbody").empty().append(rsp);
+            },
+            error: function () {
+                alert("Oops");
+            }
+        } 
+    );
+});

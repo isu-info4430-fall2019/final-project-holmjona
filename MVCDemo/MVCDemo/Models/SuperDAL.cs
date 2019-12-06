@@ -31,7 +31,7 @@ namespace MVCDemo {
             } catch (Exception ex) { }
         }
 
-        
+
 
         /// <summary>
         /// Sets Connection and Executes a command to read data from the database
@@ -306,6 +306,25 @@ namespace MVCDemo {
             return retList;
         }
 
+        public static List<Costume> GetCostumes(string color) {
+            List<Costume> oriList = GetCostumes();
+            List<Costume> retList = new List<Costume>();
+            color = color.ToUpper();
+            foreach (Costume c in oriList) {
+                if (c.ColorMainAsHexString == color) {
+                    retList.Add(c);
+                } else if (c.ColorSecondaryAsHexString == color) {
+                    retList.Add(c);
+                } else if (c.ColorTertiaryAsHexString == color) {
+                    retList.Add(c);
+                } else {
+                    // don't add it
+                }
+            }
+
+            return retList;
+        }
+
 
 
 
@@ -435,6 +454,29 @@ namespace MVCDemo {
             return retList;
         }
 
+
+        /// <summary>
+        /// Gets a list of all MVCDemo.SuperHero objects from the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public static List<SuperHero> GetSuperHeroes(string color) {
+            List<SuperHero> oriList = GetSuperHeroes();
+            List<SuperHero> retList = new List<SuperHero>();
+            color = color.ToUpper();
+            foreach (SuperHero s in oriList) {
+                if (s.Costume.ColorMainAsHexString == color) {
+                    retList.Add(s);
+                } else if (s.Costume.ColorSecondaryAsHexString == color) {
+                    retList.Add(s);
+                } else if (s.Costume.ColorTertiaryAsHexString == color) {
+                    retList.Add(s);
+                } else {
+                    // don't add it
+                }
+            }
+
+            return retList;
+        }
 
 
 
@@ -1034,7 +1076,7 @@ namespace MVCDemo {
                         retObject = new HideoutMember<object>();
                     retObject.ID = -1;
                 } else if (ID >= 0) {
-                    retObject = GetHideoutMember(T,ID);
+                    retObject = GetHideoutMember(T, ID);
                 }
             }
             return retObject;
@@ -1146,7 +1188,7 @@ namespace MVCDemo {
             return -1;
         }
 
-        
+
 
         /// <summary>
         /// Attempts to delete the database entry corresponding to the HideoutMember
@@ -1166,7 +1208,7 @@ namespace MVCDemo {
 
 
         #endregion
- 
+
 
         #region PetType
         /// <summary>
@@ -1368,7 +1410,28 @@ namespace MVCDemo {
                 }
                 comm.Connection.Close();
             } catch (Exception ex) {
+                if (comm.Connection != null) comm.Connection.Close();
+            }
+            return retList;
+        }
+
+        /// <summary>
+        /// Gets a list of all MVCDemo.SuperPet objects from the database.
+        /// </summary>
+        /// <remarks></remarks>
+        public static List<SuperPet> GetSuperPets(PetType pt) {
+            SqlCommand comm = new SqlCommand("sprocSuperPetsGetForPetType");
+            List<SuperPet> retList = new List<SuperPet>();
+            try {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@" + PetType.db_ID, pt.ID);
+                SqlDataReader dr = GetDataReader(comm);
+                while (dr.Read()) {
+                    retList.Add(new SuperPet(dr));
+                }
                 comm.Connection.Close();
+            } catch (Exception ex) {
+                if (comm.Connection != null) comm.Connection.Close();
             }
             return retList;
         }
@@ -1438,17 +1501,17 @@ namespace MVCDemo {
         }
         public static Models.User GetUser(int id) {
             // Use fake data store
-          Models.User usrFromDB =  Models.Users.GetByID(id);
+            Models.User usrFromDB = Models.Users.GetByID(id);
             // fill from fake data call
             return new Models.User(usrFromDB);
         }
-        public static Models.User GetUser(string uName,string pWord) {
+        public static Models.User GetUser(string uName, string pWord) {
             // Use fake data store
-            Models.User usrFromDB =  Models.Users.GetByUserName(uName);
+            Models.User usrFromDB = Models.Users.GetByUserName(uName);
             // fill from fake data call
             Models.User usr = new Models.User(usrFromDB);
             if (usr != null && usr.Salt != null) {
-                if (usr.Password == Models.Hasher.HashIt(pWord,usrFromDB.Salt)) {
+                if (usr.Password == Models.Hasher.HashIt(pWord, usrFromDB.Salt)) {
                     // password match
                 } else {
                     // no match
@@ -1463,7 +1526,7 @@ namespace MVCDemo {
         public static string GetCookie(Models.User usr) {
             return usr.Salt + usr.ID;
         }
-            public static Models.User GetUserForCookie(string cookValue) {
+        public static Models.User GetUserForCookie(string cookValue) {
             // Use fake data store
             Models.User usr = null;
             if (!string.IsNullOrEmpty(cookValue)) {
@@ -1474,7 +1537,7 @@ namespace MVCDemo {
                 int id;
                 if (int.TryParse(strID, out id)) {
                     usr = Models.Users.GetByID(id);
-                    if (usr.Salt == saltCheck) {
+                    if (usr != null && usr.Salt == saltCheck) {
                         // still matches not modified 
                     } else {
                         // salt and or ID changed. Assuming hacking attempt.
