@@ -6,7 +6,7 @@
 $("#filterText").keyup(function(e) {
     var tBox = $(this);
     var addy = tBox.data("url");
-    var text = tBox.val();
+   var text = tBox.val();
     $.ajax({
         url: addy
         ,method: "POST"
@@ -14,17 +14,21 @@ $("#filterText").keyup(function(e) {
         , success: function(rdata) {
             var lst = $("<ul>");
             //var lst = document.createElement("ul");
-            $.each(rdata.data, function(ndx, obj) {
-                var li = $("<li>").text(obj.text + " - " + obj.id)
-                    .data("id", obj.id).data("text", obj.text);
-                li.click(function() {
-                    var btn = $(this);
-                    $("#filterID").val(btn.data("id"));
-                    $("#filterText").val(btn.data("text"));
+            if (rdata.data.length > 0) {
+                $.each(rdata.data, function (ndx, obj) {
+                    var li = $("<li>").text(obj.text + " - " + obj.id)
+                        .data("id", obj.id).data("text", obj.text);
+                    li.click(function () {
+                        var btn = $(this);
+                        $("#filterID").val(btn.data("id"));
+                        $("#filterText").val(btn.data("text"));
+                    });
+                    lst.append(li);
                 });
-                lst.append(li);
-            });
-            $("#results").empty().append(lst);
+            } else {
+                lst.append($("<li>").text("No match found"));
+            }
+                $("#results").empty().append(lst);
         }
     });
 });

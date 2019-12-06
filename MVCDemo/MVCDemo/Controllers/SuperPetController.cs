@@ -72,13 +72,13 @@ namespace MVCDemo.Controllers {
         // GET: SuperPet/Create
         public IActionResult Create() {
             Models.User cUser = SuperDAL.GetUserForCookie(Request.Cookies["user"]);
-            Messages mess = new Messages();
-            TempData["Messages"] = mess;
+            //Messages mess = new Messages();
+            //TempData["Messages"] = mess;
             if (cUser == null) {
                 // see Shared/_Layout for this error message use.
                 // TempData is used to pass data through a Redirect.
-                //TempData["ErrorMessage"] = "You need to login to view add a Super Pet.";
-                mess.Errors.Add("You need to login to view add a Super Pet.");
+                TempData["ErrorMessage"] = "You need to login to view add a Super Pet.";
+                //mess.Errors.Add("You need to login to view add a Super Pet.");
                 // ViewBag and ViewData will only pass down to a View returned
                 // by this action. 
                 return RedirectToAction("Index", "Home");
@@ -87,8 +87,8 @@ namespace MVCDemo.Controllers {
                 ViewData["SuperHeroID"] = new SelectList(SuperDAL.GetSuperHeroes(), "ID", "FullName");
                 return View();
             } else {
-                //TempData["ErrorMessage"] = "You do not have permission to Add a SuperPet.";
-                mess.Errors.Add("You do not have permission to Add a SuperPet.");
+                TempData["ErrorMessage"] = "You do not have permission to Add a SuperPet.";
+                //mess.Errors.Add("You do not have permission to Add a SuperPet.");
                 return RedirectToAction("Index", "Home");
 
             }
