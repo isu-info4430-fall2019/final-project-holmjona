@@ -15,7 +15,17 @@ namespace MVCDemo.Controllers {
 
         public SuperHeroController() {//DELETEMEContext context) {
             //
+        
         }
+
+        public void OnActionExecuting() {
+            TempData["SuccessMessage"] = "Hello";
+        }
+
+        public void OnActionExecutionAsync() {
+            TempData["SuccessMessage"] = "Hello, async";
+        }
+
 
         // GET: SuperHero
         public async Task<IActionResult> Index(int? page, int? count) {

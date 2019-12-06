@@ -16,6 +16,7 @@ namespace MVCDemo.Controllers
         public UserController(DELETEMEContext context)
         {
             _context = context;
+            
         }
 
         // GET: User
@@ -186,6 +187,7 @@ namespace MVCDemo.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password) {
             Models.User usr = SuperDAL.GetUser(username, password);
+            //Messages mess = new Messages();
             if (usr != null) {
                 // success
                 Response.Cookies.Append("user", SuperDAL.GetCookie(usr));
@@ -193,15 +195,15 @@ namespace MVCDemo.Controllers
                 SessionHelper.Set(HttpContext.Session, "user", usr);
                 TempData["SuccessMessage"] = "Successful Login (TempData)";
                 // use Temp Data because the next two will not live through a redirect.
-                ViewData["SuccessMessage"] = "Successful Login (ViewData)"; 
-                ViewBag.SuccessMessage = "Successful Login (ViewBag)";
-
+                //ViewData["SuccessMessage"] = "Successful Login (ViewData)"; 
+                //ViewBag.SuccessMessage = "Successful Login (ViewBag)";
             } else {
                 // failed
                 TempData["ErrorMessage"] = "Login Failed (TempData)";
                 // use Temp Data because the next two will not live through a redirect.
-                ViewData["ErrorMessage"] = "Login Failed (ViewData)";
-                ViewBag.ErrorMessage = "Login Failed (ViewBag)";
+                //ViewData["ErrorMessage"] = "Login Failed (ViewData)";
+                //ViewBag.ErrorMessage = "Login Failed (ViewBag)";
+
             }
             return RedirectToAction("Index", "Home");
         }

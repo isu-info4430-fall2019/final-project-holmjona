@@ -1,0 +1,12 @@
+﻿@model Messages
+
+<div id="messages">
+@if (Model != null) {
+    @foreach (string mess in Model.Successes) {
+        <div class="badge-success success">@mess</div>
+    }
+    @foreach (string mess in Model.Errors) {
+        <div class="alert-warning error">@mess</div>
+    }
+}
+</div>
